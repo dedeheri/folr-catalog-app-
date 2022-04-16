@@ -146,7 +146,6 @@ export function getProducts() {
 export function removeProducts(id) {
   return async (dispatch) => {
     try {
-      console.log(id);
       dispatch({
         type: actionType.START_REMOVE_PRODUCT_DASHBOARD,
       });
@@ -159,6 +158,26 @@ export function removeProducts(id) {
         payload: error.response.data,
       });
       toast.error(error.response.data?.message);
+    }
+  };
+}
+
+export function addFeedback(expression, feedback, location) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionType.START_FEEDBACK });
+
+      const { data } = await url.post(
+        "backend/add-feedback",
+        { expression, feedback, urlFeedback: location },
+        config
+      );
+      dispatch({ type: actionType.SUCCESS_FEEDBACK, payload: data });
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_FEEDBACK,
+        payload: error.response.data,
+      });
     }
   };
 }

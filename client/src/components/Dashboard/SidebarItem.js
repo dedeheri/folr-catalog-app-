@@ -16,9 +16,9 @@ import { useDispatch } from "react-redux";
 
 function SidebarItem() {
   const active =
-    "bg-[#a8ffec] duration-300 flex text-black rounded-md items-center space-x-3 p-1 hover:bg-gray-200 duration-300 ";
+    "bg-slate-700 hover:bg-slate-600 duration-300 flex px-3 text-white rounded-md items-center space-x-3 p-1 duration-300 ";
   const noActive =
-    "flex text-gray-700 hover:bg-[#a8ffec] duration-300 rounded-md items-center space-x-3 p-1";
+    "flex text-gray-700 px-3 hover:bg-slate-600 hover:text-white  duration-300 rounded-md items-center space-x-3 p-1";
 
   const dispatch = useDispatch();
   function feedback() {
@@ -26,7 +26,7 @@ function SidebarItem() {
   }
 
   return (
-    <div className="fixed  w-56  md:border-r px-5  h-screen ">
+    <div className="fixed w-56 md:border-r px-5  h-screen ">
       <div className="mt-10 space-y-4">
         <NavLink
           className={({ isActive }) => (isActive ? active : noActive)}
@@ -84,7 +84,7 @@ function SidebarItem() {
         <div className="space-y-1">
           <div
             onClick={feedback}
-            className="flex cursor-pointer text-gray-700 hover:bg-gray-200 duration-300 rounded-md items-center space-x-3 p-1"
+            className="flex cursor-pointer hover:text-white px-3 hover:bg-slate-600 duration-300 rounded-md items-center space-x-3 p-1"
           >
             <BiMessageDetail fontSize={24} />
             <h1 className="text-xl">Masukan</h1>

@@ -97,6 +97,13 @@ function validation(props) {
       ];
     }
 
+    // add feedback
+    case "FEEDBACK": {
+      return [
+        body("feedback").notEmpty().withMessage("Masukan tidak boleh kosong"),
+      ];
+    }
+
     default:
       return props;
   }

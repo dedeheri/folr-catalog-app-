@@ -10,6 +10,11 @@ const initalState = {
     data: [],
     error: [],
   },
+  feedback: {
+    data: [],
+    error: [],
+    fetching: false,
+  },
 };
 
 function dashboard(state = initalState, action) {
@@ -56,6 +61,34 @@ function dashboard(state = initalState, action) {
       return {
         ...state,
         removeProducts: {
+          fetching: false,
+          error: action.payload,
+        },
+      };
+    }
+
+    // Feedback
+    case actionType.START_FEEDBACK: {
+      return {
+        ...state,
+        feedback: {
+          fetching: true,
+        },
+      };
+    }
+    case actionType.SUCCESS_FEEDBACK: {
+      return {
+        ...state,
+        feedback: {
+          fetching: false,
+          data: action.payload,
+        },
+      };
+    }
+    case actionType.FAILED_FEEDBACK: {
+      return {
+        ...state,
+        feedback: {
           fetching: false,
           error: action.payload,
         },

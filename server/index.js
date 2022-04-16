@@ -14,6 +14,7 @@ const app = express();
 // router
 const authorizationRouter = require("./src/routers/authorization.js");
 const productRouterBackend = require("./src/routers/backend/product.js");
+const feedbackRouterBackend = require("./src/routers/backend/feedback.js");
 const errorMulter = require("./src/middleware/multer/error.js");
 
 // middleware
@@ -40,6 +41,7 @@ app.use(
 // backend
 app.use("/api/backend", authorizationRouter);
 app.use("/api/backend", productRouterBackend);
+app.use("/api/backend", feedbackRouterBackend);
 
 // error
 app.use(errorMulter);
