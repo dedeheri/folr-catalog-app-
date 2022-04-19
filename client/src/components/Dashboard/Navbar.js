@@ -36,7 +36,7 @@ function Navbar() {
 
   return (
     <div
-      className={`w-full z-10 sticky top-0 bg-white  h-16 border-b px-5 flex justify-between items-center duration-300 ${
+      className={`w-full z-40 sticky top-0 bg-white  h-16 border-b px-5 flex justify-between items-center duration-300 ${
         scroll ? "shadow-md" : ""
       }`}
     >

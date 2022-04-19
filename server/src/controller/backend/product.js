@@ -5,7 +5,7 @@ const fs = require("fs");
 
 async function addProduct(req, res) {
   const userId = req.decode.id;
-  const title = req.body.title;
+  const productName = req.body.productName;
   const image = req.files;
   const price = req.body.price;
   const material = req.body.material;
@@ -22,6 +22,12 @@ async function addProduct(req, res) {
   // validation
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    if (image.length !== 0) {
+      image.map((c) => {
+        const p = path.join(__dirname, "../../../", c.path);
+        fs.unlinkSync(p);
+      });
+    }
     return res.status(422).json({ message: errors.mapped() });
   }
 
@@ -30,7 +36,7 @@ async function addProduct(req, res) {
   try {
     await new products({
       userId,
-      title,
+      productName,
       image: img,
       price,
       description,
@@ -53,8 +59,9 @@ async function addProduct(req, res) {
 
     return res
       .status(200)
-      .json({ message: `Berhasil menambahkan produk ${title}` });
+      .json({ message: `Berhasil menambahkan produk ${productName}` });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Terjadi Kesalahan" });
   }
 }
@@ -106,4 +113,93 @@ async function deleteProduct(req, res) {
   }
 }
 
-module.exports = { addProduct, getProduct, deleteProduct };
+async function detailProduct(req, res) {
+  const id = req.params.id;
+  try {
+    const product = await products.findById({ _id: id });
+    if (!product) {
+      return res.status(404).json({ message: "Produk tidak tersedia" });
+    } else {
+      return res.status(200).json({ result: product });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Terjadi Kesalahan" });
+  }
+}
+
+async function updateProduct(req, res) {
+  const id = req.params.id;
+  const productName = req.body.productName;
+  const image = req.files;
+  const price = req.body.price;
+  const material = req.body.material;
+  const category = req.body.category;
+  const catalog = req.body.catalog;
+  const description = req.body.description;
+  const tokopedia = req.body.tokopedia;
+  const shopee = req.body.shopee;
+  const lengthy = req.body.lengthy;
+  const width = req.body.width;
+  const height = req.body.height;
+  const weight = req.body.weight;
+
+  const img = image.map(({ path }) => path);
+
+  // validation
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    if (image.length !== 0) {
+      image.map((c) => {
+        const p = path.join(__dirname, "../../../", c.path);
+        fs.unlinkSync(p);
+      });
+    }
+    return res.status(422).json({ message: errors.mapped() });
+  }
+
+  try {
+    const product = await products.findById({ _id: id });
+    if (!product) {
+      return res.status(404).json({ message: "Produk tidak tersedia" });
+    }
+
+    await products.findByIdAndUpdate(
+      { _id: id },
+      {
+        productName,
+        image: img,
+        price,
+        description,
+        productInfo: {
+          category,
+          catalog,
+          dimensions: {
+            lengthy,
+            width,
+            height,
+          },
+          material,
+          weight,
+        },
+        link: {
+          shopee,
+          tokopedia,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json({ result: `Berhasil edit produk ${productName}` });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Terjadi Kesalahan" });
+  }
+}
+
+module.exports = {
+  addProduct,
+  getProduct,
+  deleteProduct,
+  detailProduct,
+  updateProduct,
+};

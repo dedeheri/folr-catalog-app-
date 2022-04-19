@@ -2,9 +2,9 @@ import React from "react";
 
 function Form({ placeholder, type, error, message, ...rest }) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 w-full">
       <div
-        className={`border px-3 rounded-md hover:bg-gray-100 duration-300 ${
+        className={`border px-3 rounded-md hover:border-black duration-300 ${
           error ? "border-red-500" : ""
         }`}
       >

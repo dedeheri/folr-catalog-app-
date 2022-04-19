@@ -14,5 +14,13 @@ router.post(
 );
 router.get("/product", verify, product.getProduct);
 router.delete("/delete-product/:id", verify, product.deleteProduct);
+router.get("/product/:id", verify, product.detailProduct);
+router.put(
+  "/product/:id",
+  verify,
+  image.array("image", 10),
+  validation("PRODUCT"),
+  product.updateProduct
+);
 
 module.exports = router;

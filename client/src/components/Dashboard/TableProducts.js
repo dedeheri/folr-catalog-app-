@@ -4,11 +4,13 @@ import { Fragment, useEffect, useRef, useState } from "react";
 // icons
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiTrash2, FiEdit2 } from "react-icons/fi";
-import { RiCoupon4Line } from "react-icons/ri";
+import { RiCoupon4Line, RiStarSmileLine } from "react-icons/ri";
+import { IoDuplicateOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
 // redux
 import * as actionTypes from "../../redux/action-types-style";
+import { useNavigate } from "react-router-dom";
 
 function TableProducts({ data }) {
   const dispatch = useDispatch();
@@ -33,8 +35,16 @@ function TableProducts({ data }) {
     dispatch({ type: actionTypes.REMOVE_PRODUCT_DASHBOARD_ON, id, title });
   }
 
+  const navigate = useNavigate();
+  function handleNavigateEdit(id, productName) {
+    const replace = productName.replaceAll(" ", "-");
+    navigate({
+      pathname: `/dashboard/product/${id}/${replace}`,
+    });
+  }
+
   return (
-    <div className=" font-roboto overflow-scroll scrollbar-hide h-full">
+    <div className=" font-roboto overflow-x-scroll scrollbar-hide">
       <table className="min-w-full table-fixed">
         <thead>
           <tr className="border-b">
@@ -55,7 +65,7 @@ function TableProducts({ data }) {
           {data?.result?.map((list, key) => (
             <tr
               key={key}
-              className="hover:bg-gray-100 border-b group text-black transition duration-400"
+              className="hover:bg-gray-100  border-b group text-black transition duration-400"
             >
               <td className="text-md whitespace-nowrap px-3 p-1">
                 <img
@@ -64,9 +74,9 @@ function TableProducts({ data }) {
                 />
               </td>
               <td className="text-md whitespace-nowrap px-3 p-1 cursor-pointer">
-                {list.title.length > 20
-                  ? list.title.substring(0, 20) + "..."
-                  : list.title}
+                {list.productName?.length > 20
+                  ? list.productName?.substring(0, 20) + "..."
+                  : list.productName}
               </td>
               <td className="text-md whitespace-nowrap px-3">
                 {currency(list.price)}
@@ -104,8 +114,8 @@ function TableProducts({ data }) {
                 </div>
               </td>
 
-              <td className="text-md whitespace-nowrap px-3 opacity-0 group-hover:opacity-100">
-                <div className="border-l pl-4">
+              <td className="text-md whitespace-nowrap px-1 opacity-0 group-hover:opacity-100">
+                <div className="border-l pl-2">
                   {/* action  */}
                   <Menu as="div" className="relative inline-block text-left">
                     <div>
@@ -125,11 +135,17 @@ function TableProducts({ data }) {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute z-50 right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="fixed right-14 md:right-20 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="px-1 py-1 ">
                           <Menu.Item>
                             {({ active }) => (
                               <button
+                                onClick={() =>
+                                  handleNavigateEdit(
+                                    list?._id,
+                                    list.productName
+                                  )
+                                }
                                 className={`${
                                   active
                                     ? "bg-gray-100 text-black"
@@ -153,11 +169,45 @@ function TableProducts({ data }) {
                                     : "text-gray-900"
                                 } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                               >
+                                <IoDuplicateOutline
+                                  className="w-5 h-5 mr-2"
+                                  aria-hidden="true"
+                                />
+                                Duplikat Produk
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active
+                                    ? "bg-gray-100 text-black"
+                                    : "text-gray-900"
+                                } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                              >
                                 <RiCoupon4Line
                                   className="w-5 h-5 mr-2"
                                   aria-hidden="true"
                                 />
                                 Terapkan diskon
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active
+                                    ? "bg-gray-100 text-black"
+                                    : "text-gray-900"
+                                } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                              >
+                                <RiStarSmileLine
+                                  className="w-5 h-5 mr-2"
+                                  aria-hidden="true"
+                                />
+                                Produk Unggulan
                               </button>
                             )}
                           </Menu.Item>

@@ -9,6 +9,10 @@ import { useDispatch } from "react-redux";
 import { getUser } from "../redux/action/dashboard";
 import Products from "../page/dashboard/Products";
 import AddProducts from "../page/dashboard/AddProducts";
+import UpdateProducts from "../page/dashboard/UpdateProducts";
+import Category from "../page/dashboard/Category";
+import AddCategory from "../page/dashboard/AddCategory";
+import AddCatalog from "../page/dashboard/AddCatalog";
 
 function Dashboard() {
   const cookie = getCookies();
@@ -28,8 +32,13 @@ function Dashboard() {
       {protec ? (
         <Routes>
           <Route path="/" index element={<Home />} />
-          <Route path="/product" index element={<Products />} />
-          <Route path="/product/add" index element={<AddProducts />} />
+          <Route path="/product" element={<Products />} />
+          <Route path="/product/add" element={<AddProducts />} />
+
+          <Route path="/product/:id/:product" element={<UpdateProducts />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="category/add-category" element={<AddCategory />} />
+          <Route path="category/add-catalog" element={<AddCatalog />} />
         </Routes>
       ) : (
         <Routes>

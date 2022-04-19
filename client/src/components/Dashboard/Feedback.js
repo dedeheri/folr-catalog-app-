@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 // icons
 import { AiOutlineClose } from "react-icons/ai";
-import { FiTrash2, FiEye } from "react-icons/fi";
 
 import { useLocation } from "react-router-dom";
 
 // redux
 import * as actionTypes from "../../redux/action-types-style";
+import * as actionType from "../../redux/action-types";
 import { useDispatch, useSelector } from "react-redux";
 
 // conponents
@@ -25,6 +25,7 @@ function Feedback() {
 
   function closeFeedBack() {
     dispatch({ type: actionTypes.FEEDBACK_DASHBOARD_OFF });
+    dispatch({ type: actionType.REMOVE_FEEDBACK });
   }
 
   const expressions = [
@@ -51,24 +52,11 @@ function Feedback() {
   ];
 
   const [expression, setExpression] = useState("");
-  const [image, setImage] = useState("");
   const [feedback, setFeedback] = useState("");
-
-  const [previewImage, setPreviewImage] = useState("");
-
-  function handleImage(e) {
-    const image = e.target.files[0];
-    setImage(image);
-    setPreviewImage(URL.createObjectURL(image));
-  }
-
-  function clearImagePriview() {
-    setPreviewImage(null);
-  }
 
   const [active, setActive] = useState(Number);
 
-  function cliciExpression(id, emot) {
+  function clickExpression(id, emot) {
     setActive(id);
     setExpression(emot);
   }
@@ -102,7 +90,7 @@ function Feedback() {
           {expressions.map((emot) => (
             <h1
               key={emot.id}
-              onClick={() => cliciExpression(emot.id, emot.emot)}
+              onClick={() => clickExpression(emot.id, emot.emot)}
               className={`text-3xl hover:bg-yellow-100 bg-yellow-50 p-1 rounded-md duration-300 cursor-pointer ${
                 active === emot.id ? "bg-yellow-200" : ""
               }`}

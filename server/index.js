@@ -15,6 +15,7 @@ const app = express();
 const authorizationRouter = require("./src/routers/authorization.js");
 const productRouterBackend = require("./src/routers/backend/product.js");
 const feedbackRouterBackend = require("./src/routers/backend/feedback.js");
+const categoryRouterBackend = require("./src/routers/backend/category.js");
 const errorMulter = require("./src/middleware/multer/error.js");
 
 // middleware
@@ -42,6 +43,7 @@ app.use(
 app.use("/api/backend", authorizationRouter);
 app.use("/api/backend", productRouterBackend);
 app.use("/api/backend", feedbackRouterBackend);
+app.use("/api/backend", categoryRouterBackend);
 
 // error
 app.use(errorMulter);

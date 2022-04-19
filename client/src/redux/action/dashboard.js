@@ -142,6 +142,21 @@ export function getProducts() {
   };
 }
 
+// detail
+export function getProductsDetail(id) {
+  return async (dispatch) => {
+    try {
+      const { data } = await url.get("backend/product/" + id, config);
+      dispatch({ type: actionType.GET_DETAIL_PRODUCT, payload: data });
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_GET_DETAIL_PRODUCT,
+        payload: error.response.data,
+      });
+    }
+  };
+}
+
 // remove products
 export function removeProducts(id) {
   return async (dispatch) => {
@@ -178,6 +193,95 @@ export function addFeedback(expression, feedback, location) {
         type: actionType.FAILED_FEEDBACK,
         payload: error.response.data,
       });
+    }
+  };
+}
+
+export function addProducts(formData, navigate) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionType.START_ADD_PRODUCT });
+      const header = {
+        headers: {
+          "content-type ": `multipart/form-data; boundary=${formData._boundry}`,
+        },
+      };
+
+      const { data } = await url.post("backend/add-product", formData, {
+        header,
+      });
+      dispatch({ type: actionType.SUCCESS_ADD_PRODUCT, payload: data });
+      toast.success(data?.message);
+      navigate("/dashboard/product");
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_ADD_PRODUCT,
+        payload: error.response.data,
+      });
+      toast.error(error.response.data.message);
+    }
+  };
+}
+
+// get categoru
+export function getCategoryDashboard() {
+  return async (dispatch) => {
+    try {
+      const { data } = await url.get("backend/category", config);
+      dispatch({ type: actionType.GET_CATEGORY, payload: data });
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_GET_CATEGORY,
+        payload: error.response.data,
+      });
+    }
+  };
+}
+
+// get categoru
+export function addCategory(category, navigate) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionType.START_ADD_CATEGORY });
+      const { data } = await url.post(
+        "backend/add-category",
+        { category },
+        config
+      );
+      dispatch({ type: actionType.SUCCESS_ADD_CATEGORY, payload: data });
+      toast.success(data?.message);
+      navigate("/dashboard/category");
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_ADD_CATEGORY,
+        payload: error.response.data,
+      });
+    }
+  };
+}
+
+export function addCatalog(formData, navigate) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionType.START_ADD_CATALOG });
+      const header = {
+        headers: {
+          "content-type ": `multipart/form-data; boundary=${formData._boundry}`,
+        },
+      };
+
+      const { data } = await url.post("backend/add-catalog", formData, {
+        header,
+      });
+      dispatch({ type: actionType.SUCCESS_ADD_CATALOG, payload: data });
+      toast.success(data?.message);
+      navigate("/dashboard/category");
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_ADD_CATALOG,
+        payload: error.response.data,
+      });
+      toast.error(error.response.data.message);
     }
   };
 }

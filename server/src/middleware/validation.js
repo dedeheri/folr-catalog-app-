@@ -15,7 +15,12 @@ function validation(props) {
         body("password")
           .notEmpty()
           .withMessage("Kata Sandi tidak boleh kosong")
-          .isLength({ min: 6 })
+          .isStrongPassword({
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+          })
           .withMessage("Kata Sandi minimal 6 karakter atau lebih"),
         body("repeatPassword")
           .notEmpty()
@@ -78,7 +83,15 @@ function validation(props) {
     // add product
     case "PRODUCT": {
       return [
-        body("title").notEmpty().withMessage("Nama Produk tidak boleh kosong"),
+        body("image").custom((value, { req }) => {
+          if (req.files.length == 0) {
+            throw new Error("Produk harus memiliki minimum 1 gambar");
+          }
+          return true;
+        }),
+        body("productName")
+          .notEmpty()
+          .withMessage("Nama Produk tidak boleh kosong"),
         body("price").notEmpty().withMessage("Harga tidak boleh kosong"),
         body("material").notEmpty().withMessage("Bahan tidak boleh kosong"),
         body("category").notEmpty().withMessage("Kategori tidak boleh kosong"),
@@ -101,6 +114,27 @@ function validation(props) {
     case "FEEDBACK": {
       return [
         body("feedback").notEmpty().withMessage("Masukan tidak boleh kosong"),
+      ];
+    }
+
+    // category
+    case "CATEGORY": {
+      return [
+        body("category").notEmpty().withMessage("Kategori tidak boleh kosong"),
+      ];
+    }
+
+    // catalog
+    case "CATALOG": {
+      return [
+        body("category").notEmpty().withMessage("Kategori tidak boleh kosong"),
+        body("catalog").notEmpty().withMessage("Katalog tidak boleh kosong"),
+        body("image").custom((value, { req }) => {
+          if (!req.file) {
+            throw new Error("Gambar tidak boleh kosong");
+          }
+          return true;
+        }),
       ];
     }
 

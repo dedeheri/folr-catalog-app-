@@ -20,7 +20,7 @@ function Menu({ children }) {
     <Transition.Root show={menu} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 overflow-hidden"
+        className="fixed inset-0 z-50 overflow-hidden"
         onClose={handleClose}
       >
         <div className="absolute inset-0 overflow-hidden">
