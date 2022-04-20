@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "../page/dashboard/Home";
+
+// cookie
 import getCookies from "../utils/cookie";
 
 // redux
 import { useDispatch } from "react-redux";
-import { getUser } from "../redux/action/dashboard";
+import { getUser } from "../redux/action/dashboard/auth";
+
+// page
+import Home from "../page/dashboard/Home";
 import Products from "../page/dashboard/Products";
 import AddProducts from "../page/dashboard/AddProducts";
 import UpdateProducts from "../page/dashboard/UpdateProducts";
 import Category from "../page/dashboard/Category";
 import AddCategory from "../page/dashboard/AddCategory";
 import AddCatalog from "../page/dashboard/AddCatalog";
+import UpdateCatalog from "../page/dashboard/UpdateCatalog";
 
 function Dashboard() {
   const cookie = getCookies();
@@ -39,6 +44,7 @@ function Dashboard() {
           <Route path="/category" element={<Category />} />
           <Route path="category/add-category" element={<AddCategory />} />
           <Route path="category/add-catalog" element={<AddCatalog />} />
+          <Route path="category/catalog" element={<UpdateCatalog />} />
         </Routes>
       ) : (
         <Routes>

@@ -4,7 +4,7 @@ import { Fragment } from "react";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import * as actionTypes from "../../redux/action-types-style";
-import { removeProducts } from "../../redux/action/dashboard/product";
+import { removeCatalog } from "../../redux/action/dashboard/category";
 
 // components
 import Button from "../Button";
@@ -13,17 +13,17 @@ import Spin from "../Spin";
 // image
 import { remove } from "../../image";
 
-function RemoveProduct() {
+function RemoveCatalog() {
   const dispatch = useDispatch();
   const {
-    removeProduct: { condition, id, title },
+    removeCatalog: { condition, id, title },
   } = useSelector((state) => state.style);
 
   function closeModal() {
-    dispatch({ type: actionTypes.REMOVE_PRODUCT_DASHBOARD_OFF });
+    dispatch({ type: actionTypes.REMOVE_CATALOG_OFF });
   }
   function handleLogOut() {
-    dispatch(removeProducts(id));
+    dispatch(removeCatalog(id));
     closeModal();
   }
 
@@ -93,4 +93,4 @@ function RemoveProduct() {
   );
 }
 
-export default RemoveProduct;
+export default RemoveCatalog;

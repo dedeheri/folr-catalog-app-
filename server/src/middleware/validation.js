@@ -15,12 +15,7 @@ function validation(props) {
         body("password")
           .notEmpty()
           .withMessage("Kata Sandi tidak boleh kosong")
-          .isStrongPassword({
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-          })
+          .isLength({ min: 6 })
           .withMessage("Kata Sandi minimal 6 karakter atau lebih"),
         body("repeatPassword")
           .notEmpty()

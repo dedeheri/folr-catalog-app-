@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Dashboard/Layout";
 import TableProducts from "../../components/Dashboard/TableProducts";
 import Table from "../../components/Dashboard/Loading/Table";
-import { getProducts } from "../../redux/action/dashboard";
+import { getProducts } from "../../redux/action/dashboard/product";
 import Empty from "../../components/Empty";
 import Add from "../../components/Dashboard/Add";
 import Filter from "../../components/Dashboard/Filter";
@@ -13,9 +13,9 @@ import Filter from "../../components/Dashboard/Filter";
 function Products() {
   const dispatch = useDispatch();
   const {
-    getProducts: { data, loading, error },
-    removeProducts: { data: message },
-  } = useSelector((state) => state.dashboard);
+    get: { data, loading },
+    remove: { data: message },
+  } = useSelector((state) => state.dashboardProducts);
 
   useEffect(() => {
     dispatch(getProducts());

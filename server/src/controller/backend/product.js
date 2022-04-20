@@ -106,7 +106,9 @@ async function deleteProduct(req, res) {
     remove(product.image);
     await products.findByIdAndRemove({ _id: product._id }, { new: true });
 
-    return res.status(200).json({ message: `Berhasil hapus ${product.title}` });
+    return res
+      .status(200)
+      .json({ message: `Berhasil hapus ${product.productName}` });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Terjadi Kesalahan!" });

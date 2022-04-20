@@ -9,12 +9,12 @@ import FormCurrency from "../../components/FormCurrency";
 import Spin from "../../components/Spin";
 import Textarea from "../../components/Textarea";
 import Upload from "../../components/Upload";
-import { addProducts } from "../../redux/action/dashboard";
+import { addProducts } from "../../redux/action/dashboard/product";
 
 function AddProducts() {
   const {
-    addProducts: { data, error, fetching },
-  } = useSelector((state) => state.dashboard);
+    add: { error, fetching },
+  } = useSelector((state) => state.dashboardProducts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

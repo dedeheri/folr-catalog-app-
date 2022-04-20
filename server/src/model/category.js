@@ -11,10 +11,12 @@ const category = mongoose.Schema(
       required: true,
       trim: true,
     },
-    catalog: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "catalogs",
-    },
+    catalog: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "catalogs",
+      },
+    ],
   },
   { timestamps: true }
 );

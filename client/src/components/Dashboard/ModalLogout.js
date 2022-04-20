@@ -12,7 +12,7 @@ import Button from "../Button";
 import Spin from "../Spin";
 
 // redux
-import { signOut } from "../../redux/action/dashboard";
+import { signOut } from "../../redux/action/dashboard/auth";
 
 // image
 import { logout } from "../../image";

@@ -53,18 +53,19 @@ async function signIn(req, res) {
     );
 
     if (rememberMe) {
-      res.cookie("logged", true, {
-        maxAge: 30 * 24 * 3600000,
-        origin: ".localhost:3000",
-        httpOnly: false,
-        path: "/",
-      });
       res.cookie("token", accessToken, {
         maxAge: 30 * 24 * 3600000,
       });
+      res.cookie("logged", true, {
+        maxAge: 30 * 24 * 3600000,
+      });
     } else {
-      res.cookie("logged", true);
-      res.cookie("token", accessToken);
+      res.cookie("logged", true, {
+        maxAge: 1 * 24 * 3600000,
+      });
+      res.cookie("token", accessToken, {
+        maxAge: 1 * 24 * 3600000,
+      });
     }
 
     const { password, ...rest } = authorization._doc;
@@ -80,6 +81,8 @@ async function signUp(req, res) {
   const email = req.body.email;
   const password = req.body.password;
   const repeatPassword = req.body.repeatPassword;
+
+  console.log(password);
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -116,10 +119,10 @@ async function logOut(req, res) {
   const cookies = req.cookies;
 
   try {
-    for (let cookie in cookies) {
-      res.clearCookie(cookie);
-      return res.status(200).json({ message: "Berhasil keluar" });
-    }
+    Object.keys(cookies).map((_) => {
+      res.clearCookie(_);
+    });
+    return res.status(200).json({ message: "Berhasil keluar" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Terjadi Kesalahan" });

@@ -1,30 +1,51 @@
 import { useDispatch, useSelector } from "react-redux";
-import Add from "../../components/Dashboard/Add";
-import Filter from "../../components/Dashboard/Filter";
-import Layout from "../../components/Dashboard/Layout";
-import { getCategoryDashboard } from "../../redux/action/dashboard";
-import CategoryLoading from "../../components/Dashboard/Loading/Category";
-import Empty from "../../components/Empty";
 
+// headlessUi
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect } from "react";
 
 // icons
 import { FiTrash2, FiEdit2 } from "react-icons/fi";
-import { RiCoupon4Line, RiStarSmileLine } from "react-icons/ri";
-import { IoDuplicateOutline } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
+
+// redux
+import * as actionTypes from "../../redux/action-types-style";
+import { getCategory } from "../../redux/action/dashboard/category";
+
+// components
+import CategoryLoading from "../../components/Dashboard/Loading/Category";
+import Add from "../../components/Dashboard/Add";
+import Filter from "../../components/Dashboard/Filter";
+import Layout from "../../components/Dashboard/Layout";
+import Empty from "../../components/Empty";
+import { createSearchParams, useNavigate } from "react-router-dom";
+
 function Category() {
   const {
-    getCategory: { data, loading, error },
-  } = useSelector((state) => state.dashboard);
+    getCategory: { data, loading },
+    removeCatalog: { data: message },
+  } = useSelector((state) => state.dashboardCategory);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getCategoryDashboard());
-  }, [dispatch]);
+    dispatch(getCategory());
+  }, [dispatch, message]);
 
-  console.log(data);
+  function openModal(id, title) {
+    dispatch({ type: actionTypes.REMOVE_CATALOG_ON, id, title });
+  }
+
+  function updateCatalog(category, id) {
+    navigate({
+      pathname: "catalog",
+      search: `${createSearchParams({
+        category: category,
+        catalogId: id,
+      })}`,
+    });
+  }
+
   return (
     <Layout>
       <div className="flex space-x-3 md:justify-end overflow-x-scroll md:overflow-hidden scrollbar-hide w-full">
@@ -103,7 +124,7 @@ function Category() {
               </Menu>
             </div>
             <div className=" grid grid-cols-2 md:grid-cols-5 gap-3">
-              {category.subCategory.map(({ image, catalog, _id }) => (
+              {category.catalog.map(({ image, catalog, _id }) => (
                 <div
                   key={_id}
                   className="border p-3 space-y-4 rounded-md relative group"
@@ -134,6 +155,9 @@ function Category() {
                             <Menu.Item>
                               {({ active }) => (
                                 <button
+                                  onClick={() =>
+                                    updateCatalog(category.category, _id)
+                                  }
                                   className={`${
                                     active
                                       ? "bg-gray-100 text-black"
@@ -154,6 +178,7 @@ function Category() {
                             <Menu.Item>
                               {({ active }) => (
                                 <button
+                                  onClick={() => openModal(_id, catalog)}
                                   className={`${
                                     active
                                       ? "bg-gray-100 text-black"

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Button from "../../../components/Button";
-import Form from "../../../components/Form";
-import Spin from "../../../components/Spin";
-import { forget } from "../../../redux/action/dashboard";
 
 // components
 import Layout from "./Layout";
+import Button from "../../../components/Button";
+import Form from "../../../components/Form";
+import Spin from "../../../components/Spin";
+import { forget } from "../../../redux/action/dashboard/auth";
 
 // icons
-import { GrFormClose, GrSend } from "react-icons/gr";
+import { GrFormClose } from "react-icons/gr";
 
 function Forget() {
   const {

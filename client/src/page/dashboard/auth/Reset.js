@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import Button from "../../../components/Button";
 import FormPassword from "../../../components/FromPassword";
 import Spin from "../../../components/Spin";
-import { getTokenExp, reset } from "../../../redux/action/dashboard";
+import { getTokenExp, reset } from "../../../redux/action/dashboard/auth";
 import NotFound from "../../NotFound";
 import Layout from "./Layout";
 

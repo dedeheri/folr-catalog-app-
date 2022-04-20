@@ -13,24 +13,26 @@ import Spin from "../../components/Spin";
 import Textarea from "../../components/Textarea";
 import Upload from "../../components/Upload";
 import Update from "../../components/Dashboard/Loading/Update";
-import {
-  getCategoryDashboard,
-  getProductsDetail,
-} from "../../redux/action/dashboard";
+import { getCategory } from "../../redux/action/dashboard/category";
+
+import { getProductsDetail } from "../../redux/action/dashboard/product";
 
 function UpdateProducts() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const {
-    detailProduct: { data, error, loading },
     getCategory: { data: categorys, error: errors, loading: loadingg },
-  } = useSelector((state) => state.dashboard);
+  } = useSelector((state) => state.dashboardCategory);
+
+  const {
+    detail: { data, error, loading },
+  } = useSelector((state) => state.dashboardProducts);
 
   // console.log(categorys);
 
   useEffect(() => {
     dispatch(getProductsDetail(id));
-    dispatch(getCategoryDashboard());
+    dispatch(getCategory());
   }, [dispatch, id]);
 
   // form
@@ -144,8 +146,8 @@ function UpdateProducts() {
                 </div>
                 <div className="col-span-2">
                   <div className="flex space-x-2">
-                    <Select data={categorys} />
-                    <Select />
+                    {/* <Select data={categorys} />
+                    <Select /> */}
 
                     {/* <Form
                       placeholder="Kategori"

@@ -22,10 +22,15 @@ router.post(
   category.addCatalog
 );
 router.get("/category", verify, category.getCategory);
-router.delete(
-  "/catalog/:categoryId/:catalogId",
+router.delete("/catalog/:id", verify, category.deleteCatalog);
+router.put(
+  "/catalog",
   verify,
-  category.deleteCatalog
+  image.single("image"),
+  validation("CATALOG"),
+  category.updateCatalog
 );
+
+router.get("/catalog", verify, category.detailCatalog);
 
 module.exports = router;

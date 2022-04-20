@@ -6,20 +6,20 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 
 // redux
-import * as actionTypes from "../../redux/action-types-style";
-import * as actionType from "../../redux/action-types";
 import { useDispatch, useSelector } from "react-redux";
+import * as actionTypes from "../../redux/action-types-style";
+import * as actionType from "../../redux/reducer/dashboard/feedback/actionType";
+import { addFeedback } from "../../redux/action/dashboard/feedback";
 
 // conponents
 import Button from "../Button";
 import Spin from "../Spin";
-import { addFeedback } from "../../redux/action/dashboard";
 
 function Feedback() {
   const { feedback: feedbacks } = useSelector((state) => state.style);
   const {
     feedback: { error, data, fetching },
-  } = useSelector((state) => state.dashboard);
+  } = useSelector((state) => state.dashboardFeedback);
   const dispatch = useDispatch();
   const location = useLocation();
 

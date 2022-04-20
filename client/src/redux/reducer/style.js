@@ -8,6 +8,10 @@ const initialState = {
     data: [],
   },
   feedback: false,
+  removeCatalog: {
+    condition: false,
+    data: [],
+  },
 };
 
 function style(state = initialState, action) {
@@ -71,7 +75,25 @@ function style(state = initialState, action) {
         feedback: false,
       };
     }
-
+    // remove catalog
+    case actionTypes.REMOVE_CATALOG_ON: {
+      return {
+        ...state,
+        removeCatalog: {
+          condition: true,
+          id: action.id,
+          title: action.title,
+        },
+      };
+    }
+    case actionTypes.REMOVE_CATALOG_OFF: {
+      return {
+        ...state,
+        removeCatalog: {
+          condition: false,
+        },
+      };
+    }
     default:
       return state;
   }

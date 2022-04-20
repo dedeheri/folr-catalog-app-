@@ -8,6 +8,7 @@ import RemoveProduct from "./RemoveProduct";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Feedback from "./Feedback";
+import RemoveCatalog from "./RemoveCatalog";
 function Layout({ children }) {
   return (
     <div className="relative  h-screen">
@@ -25,6 +26,7 @@ function Layout({ children }) {
       <Navbar />
       <ModalLogout />
       <RemoveProduct />
+      <RemoveCatalog />
       <Menu>
         <SidebarItem />
       </Menu>

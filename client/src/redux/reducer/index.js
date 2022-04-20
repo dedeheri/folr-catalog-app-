@@ -1,13 +1,19 @@
 import { combineReducers } from "redux";
 
 // reducur
-import auth from "./auth";
 import style from "./style";
-import dashboard from "./dashboard";
+
+// dashboard
+import dashboardProducts from "./dashboard/product/product";
+import dashboardCategory from "./dashboard/category/category";
+import dashboardFeedback from "./dashboard/feedback/feedback";
+import auth from "../reducer/dashboard/auth/auth";
 
 const reducers = combineReducers({
   auth,
   style,
-  dashboard,
+  dashboardProducts,
+  dashboardCategory,
+  dashboardFeedback,
 });
 export default reducers;

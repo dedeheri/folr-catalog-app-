@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import { Link, useNavigate } from "react-router-dom";
 
 // components
@@ -7,11 +7,12 @@ import Button from "../../../components/Button";
 import Form from "../../../components/Form";
 import FormPassword from "../../../components/FromPassword";
 import Spin from "../../../components/Spin";
-
-import { signIn } from "../../../redux/action/dashboard";
 import Layout from "./Layout";
 
-import * as actionTypes from "../../../redux/action-types";
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../../../redux/action/dashboard/auth";
+import * as actionTypes from "../../../redux/reducer/dashboard/auth/actionTypes";
 
 function Login() {
   const {

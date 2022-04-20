@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
-import ButtonCancel from "../../components/ButtonCancel";
 
 // componets
+import Button from "../../components/Button";
+import ButtonCancel from "../../components/ButtonCancel";
 import Layout from "../../components/Dashboard/Layout";
 import Form from "../../components/Form";
 import Spin from "../../components/Spin";
-import { addCategory } from "../../redux/action/dashboard";
+
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { addCategory } from "../../redux/action/dashboard/category";
 
 function AddCategory() {
   const {
     addCategory: { fetching, error },
-  } = useSelector((state) => state.dashboard);
+  } = useSelector((state) => state.dashboardCategory);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
