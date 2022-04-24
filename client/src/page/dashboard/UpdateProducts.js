@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import Button from "../../components/Button";
-import ButtonCancel from "../../components/ButtonCancel";
-import Select from "../../components/Select";
+import { useNavigate, useParams } from "react-router-dom";
 
 // components
 import Layout from "../../components/Dashboard/Layout";
@@ -13,27 +10,38 @@ import Spin from "../../components/Spin";
 import Textarea from "../../components/Textarea";
 import Upload from "../../components/Upload";
 import Update from "../../components/Dashboard/Loading/Update";
+import Button from "../../components/Button";
+import ButtonCancel from "../../components/ButtonCancel";
+import SelectCatalog from "../../components/SelectCatalog";
+import SelectCategory from "../../components/SelectCategory";
+
+// redux
 import { getCategory } from "../../redux/action/dashboard/category";
 
-import { getProductsDetail } from "../../redux/action/dashboard/product";
+import {
+  getProductsDetail,
+  updateProducts,
+} from "../../redux/action/dashboard/product";
 
 function UpdateProducts() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
-    getCategory: { data: categorys, error: errors, loading: loadingg },
+    getCategory: { data: categorys, loading: loadingg },
   } = useSelector((state) => state.dashboardCategory);
 
   const {
-    detail: { data, error, loading },
+    detail: { data, error: errors, loading },
+    update: { error },
   } = useSelector((state) => state.dashboardProducts);
-
-  // console.log(categorys);
 
   useEffect(() => {
     dispatch(getProductsDetail(id));
     dispatch(getCategory());
   }, [dispatch, id]);
+
+  console.log(error);
 
   // form
   const [image, setImage] = useState([]);
@@ -50,12 +58,116 @@ function UpdateProducts() {
   const [tokopedia, setTokopedia] = useState("");
   const [shopee, setShopee] = useState("");
 
+  const [previewOne, setPreviewOne] = useState(null);
+  const [previewTwo, setPreviewTwo] = useState(null);
+  const [previewThree, setPreviewThree] = useState(null);
+  const [previewFour, setPreviewFour] = useState(null);
+  const [imageOne, setImageOne] = useState("");
+  const [imageTwo, setImageTwo] = useState("");
+  const [imageThree, setImageThree] = useState("");
+  const [imageFour, setImageFour] = useState("");
+
+  useEffect(() => {
+    setImage(data?.result?.image);
+    setProductName(data?.result?.productName);
+    setDescription(data?.result?.description);
+    setPrice(data?.result?.price);
+    setCategory(data?.result?.productInfo);
+    setCatalog(data?.result?.productInfo);
+    setMaterial(data?.result?.productInfo?.material);
+    setWeight(data?.result?.productInfo?.weight);
+    setLengthy(data?.result?.productInfo?.dimensions?.lengthy);
+    setWidth(data?.result?.productInfo?.dimensions?.width);
+    setHeight(data?.result?.productInfo?.dimensions?.height);
+    setTokopedia(data?.result?.link?.tokopedia);
+    setShopee(data?.result?.link?.shopee);
+
+    if (data?.result?.image[0] !== undefined) {
+      setPreviewOne(process.env.REACT_APP_URL_IMAGE + data?.result?.image[0]);
+    }
+    if (data?.result?.image[1] !== undefined) {
+      setPreviewTwo(process.env.REACT_APP_URL_IMAGE + data?.result?.image[1]);
+    }
+    if (data?.result?.image[2] !== undefined) {
+      setPreviewThree(process.env.REACT_APP_URL_IMAGE + data?.result?.image[2]);
+    }
+    if (data?.result?.image[3] !== undefined) {
+      setPreviewFour(process.env.REACT_APP_URL_IMAGE + data?.result?.image[3]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setImage([imageOne, imageTwo, imageThree, imageFour]);
+  }, [imageOne, imageTwo, imageThree, imageFour]);
+
+  function handleUpdate(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    for (let i = 0; i < image.length; i++) {
+      formData.append("image", image[i]);
+    }
+    formData.append("productName", productName);
+    formData.append("catalog", catalog.catalog);
+    formData.append("category", category.category);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("material", material);
+    formData.append("weight", weight);
+    formData.append("lengthy", lengthy);
+    formData.append("width", width);
+    formData.append("height", height);
+    formData.append("tokopedia", tokopedia);
+    formData.append("shopee", shopee);
+    dispatch(updateProducts(formData, id, navigate));
+  }
+
+  console.log(image);
+
+  function handlePreviewOne(e) {
+    const image = e.target.files[0];
+    setImageOne(image);
+    setPreviewOne(URL.createObjectURL(image));
+  }
+
+  function handlePreviewTwo(e) {
+    const image = e.target.files[0];
+    setImageTwo(image);
+    setPreviewTwo(URL.createObjectURL(image));
+  }
+  function handlePreviewThree(e) {
+    const image = e.target.files[0];
+    setImageThree(image);
+    setPreviewThree(URL.createObjectURL(image));
+  }
+  function handlePreviewFour(e) {
+    const image = e.target.files[0];
+    setImageFour(image);
+    setPreviewFour(URL.createObjectURL(image));
+  }
+
+  function handleDeletePreviewOne() {
+    setPreviewOne(null);
+    setImageOne(null);
+  }
+  function handleDeletePreviewTwo() {
+    setPreviewTwo(null);
+    setImageTwo(null);
+  }
+  function handleDeletePreviewThree() {
+    setPreviewThree(null);
+    setImageThree(null);
+  }
+  function handleDeletePreviewFour() {
+    setPreviewFour(null);
+    setImageFour(null);
+  }
+
   return (
     <Layout>
-      {loading ? (
+      {loading || loadingg ? (
         <Update />
       ) : (
-        <form className="max-w-5xl mx-auto">
+        <form onSubmit={handleUpdate} className="max-w-5xl mx-auto">
           <h1 className="font-medium text-2xl">
             Edit Produk {data?.result?.productName}
           </h1>
@@ -73,46 +185,40 @@ function UpdateProducts() {
                 </div>
                 <div className="col-span-2 space-y-1">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                    {data?.result?.image.map((_, i) => (
-                      <Upload
-                        key={i}
-                        image={process.env.REACT_APP_URL_IMAGE + _}
-                      />
-                    ))}
-
-                    {data?.result?.image.length < 3 ? (
-                      <div className="flex w-full space-x-2">
-                        <Upload />
-                        <Upload />
-                        <Upload />
-                      </div>
-                    ) : null}
-
-                    {/* <Upload
-                      image={
-                        data?.result?.image[1] == null
-                          ? process.env.REACT_APP_URL_IMAGE +
-                            data?.result?.image[1]
-                          : null
-                      }
+                    <Upload
+                      handleDeletePreview={handleDeletePreviewOne}
+                      error={error?.message?.image?.msg || error?.error?.multer}
+                      image={previewOne}
+                      onChange={handlePreviewOne}
                     />
                     <Upload
-                      image={
-                        process.env.REACT_APP_URL_IMAGE + data?.result?.image[2]
-                      }
+                      handleDeletePreview={handleDeletePreviewTwo}
+                      error={error?.message?.image?.msg || error?.error?.multer}
+                      image={previewTwo}
+                      onChange={handlePreviewTwo}
                     />
                     <Upload
-                      image={
-                        process.env.REACT_APP_URL_IMAGE + data?.result?.image[3]
-                      }
-                    /> */}
+                      handleDeletePreview={handleDeletePreviewThree}
+                      image={previewThree}
+                      onChange={handlePreviewThree}
+                      error={error?.message?.image?.msg || error?.error?.multer}
+                    />
+                    <Upload
+                      handleDeletePreview={handleDeletePreviewFour}
+                      image={previewFour}
+                      onChange={handlePreviewFour}
+                      error={error?.message?.image?.msg || error?.error?.multer}
+                    />
+
+                    {error?.message?.image?.msg && (
+                      <p className="text-red-500">
+                        {error?.message?.image?.msg}
+                      </p>
+                    )}
+                    {error?.error?.multer && (
+                      <p className="text-red-500">{error?.error?.multer}</p>
+                    )}
                   </div>
-                  {/* {error?.message?.image?.msg && (
-                    <p className="text-red-500">{error?.message?.image?.msg}</p>
-                  )}
-                  {error?.error?.multer && (
-                    <p className="text-red-500">{error?.error?.multer}</p>
-                  )} */}
                 </div>
               </div>
             </div>
@@ -131,10 +237,10 @@ function UpdateProducts() {
                 </div>
                 <div className="col-span-2">
                   <Form
-                    // message={error?.message?.productName?.msg}
-                    // error={error?.message?.productName?.msg}
+                    message={error?.message?.productName?.msg}
+                    error={error?.message?.productName?.msg}
                     placeholder="Nama Produk"
-                    value={data?.result?.productName}
+                    value={productName || " "}
                     onChange={(e) => setProductName(e.target.value)}
                   />
                 </div>
@@ -145,24 +251,25 @@ function UpdateProducts() {
                   <h1 className="text-md font-medium">Kategori dan Katalog</h1>
                 </div>
                 <div className="col-span-2">
-                  <div className="flex space-x-2">
-                    {/* <Select data={categorys} />
-                    <Select /> */}
-
-                    {/* <Form
-                      placeholder="Kategori"
-                      // message={error?.message?.category?.msg}
-                      // error={error?.message?.category?.msg}
-                      value={data?.result?.productInfo?.category}
-                      onChange={(e) => setCategory(e.target.value)}
-                    />
-                    <Form
-                      placeholder="Katalog"
-                      // message={error?.message?.catalog?.msg}
-                      // error={error?.message?.catalog?.msg}
-                      // onChange={(e) => setCatalog(e.target.value)}
-                    /> */}
-                  </div>
+                  {loadingg ? (
+                    <div className="flex space-x-2 animate-pulse">
+                      <div className="bg-gray-100 w-full h-10 rounded-md" />
+                      <div className="bg-gray-100 w-full h-10 rounded-md" />
+                    </div>
+                  ) : (
+                    <div className="flex space-x-2">
+                      <SelectCategory
+                        category={category}
+                        data={categorys}
+                        setCategory={setCategory}
+                      />
+                      <SelectCatalog
+                        data={categorys}
+                        catalog={catalog}
+                        setCatalog={setCatalog}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -181,10 +288,11 @@ function UpdateProducts() {
                 </div>
                 <div className="col-span-2">
                   <Textarea
+                    value={description || " "}
                     placeholder={"Deskripsi"}
-                    // message={error?.message?.description?.msg}
-                    // error={error?.message?.description?.msg}
-                    // onChange={(e) => setDescription(e.target.value)}
+                    message={error?.message?.description?.msg}
+                    error={error?.message?.description?.msg}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
               </div>
@@ -202,9 +310,10 @@ function UpdateProducts() {
                   <FormCurrency
                     placeholder={"Harga"}
                     span={"Rp"}
-                    // message={error?.message?.price?.msg}
-                    // error={error?.message?.price?.msg}
-                    // onChange={(e) => setPrice(e.target.value)}
+                    value={price || " "}
+                    message={error?.message?.price?.msg}
+                    error={error?.message?.price?.msg}
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
               </div>
@@ -221,9 +330,10 @@ function UpdateProducts() {
                 <div className="col-span-2">
                   <Form
                     placeholder={"Bahan"}
-                    // message={error?.message?.material?.msg}
-                    // error={error?.message?.material?.msg}
-                    // onChange={(e) => setMaterial(e.target.value)}
+                    message={error?.message?.material?.msg}
+                    error={error?.message?.material?.msg}
+                    onChange={(e) => setMaterial(e.target.value)}
+                    value={material || " "}
                   />
                 </div>
               </div>
@@ -239,9 +349,10 @@ function UpdateProducts() {
                   <FormCurrency
                     placeholder={"Berat"}
                     span="Gram"
-                    // message={error?.message?.weight?.msg}
-                    // error={error?.message?.weight?.msg}
-                    // onChange={(e) => setWeight(e.target.value)}
+                    message={error?.message?.weight?.msg}
+                    error={error?.message?.weight?.msg}
+                    onChange={(e) => setWeight(e.target.value)}
+                    value={weight || " "}
                   />
                 </div>
               </div>
@@ -259,23 +370,26 @@ function UpdateProducts() {
                     <FormCurrency
                       placeholder={"Panjang"}
                       span="Cm"
-                      // message={error?.message?.lengthy?.msg}
-                      // error={error?.message?.lengthy?.msg}
-                      // onChange={(e) => setLengthy(e.target.value)}
+                      message={error?.message?.lengthy?.msg}
+                      error={error?.message?.lengthy?.msg}
+                      onChange={(e) => setLengthy(e.target.value)}
+                      value={lengthy || " "}
                     />
                     <FormCurrency
                       placeholder={"Lebar"}
                       span="Cm"
-                      // message={error?.message?.width?.msg}
-                      // error={error?.message?.width?.msg}
-                      // onChange={(e) => setWidth(e.target.value)}
+                      message={error?.message?.width?.msg}
+                      error={error?.message?.width?.msg}
+                      onChange={(e) => setWidth(e.target.value)}
+                      value={width || " "}
                     />
                     <FormCurrency
                       placeholder={"Tinggi"}
                       span="Cm"
-                      // message={error?.message?.height?.msg}
-                      // error={error?.message?.height?.msg}
-                      // onChange={(e) => setHeight(e.target.value)}
+                      message={error?.message?.height?.msg}
+                      error={error?.message?.height?.msg}
+                      onChange={(e) => setHeight(e.target.value)}
+                      value={height || " "}
                     />
                   </div>
                 </div>
@@ -293,9 +407,10 @@ function UpdateProducts() {
                 <div className="col-span-2">
                   <Form
                     placeholder={"Tokopedia"}
-                    // message={error?.message?.tokopedia?.msg}
-                    // error={error?.message?.tokopedia?.msg}
-                    // onChange={(e) => setTokopedia(e.target.value)}
+                    message={error?.message?.tokopedia?.msg}
+                    error={error?.message?.tokopedia?.msg}
+                    onChange={(e) => setTokopedia(e.target.value)}
+                    value={tokopedia || " "}
                   />
                 </div>
               </div>
@@ -307,9 +422,9 @@ function UpdateProducts() {
                 <div className="col-span-2">
                   <Form
                     placeholder={"Shoppe"}
-                    value={data?.result?.link?.shopee}
-                    // message={error?.message?.shopee?.msg}
-                    // error={error?.message?.shopee?.msg}
+                    value={shopee || " "}
+                    message={error?.message?.shopee?.msg}
+                    error={error?.message?.shopee?.msg}
                     onChange={(e) => setShopee(e.target.value)}
                   />
                 </div>

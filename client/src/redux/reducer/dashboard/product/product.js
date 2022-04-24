@@ -21,6 +21,15 @@ const initalState = {
     data: [],
     error: [],
   },
+  update: {
+    fetching: false,
+    data: [],
+    error: [],
+  },
+  featuredProduct: {
+    data: [],
+    error: [],
+  },
 };
 
 function dashboardProducts(state = initalState, action) {
@@ -117,6 +126,52 @@ function dashboardProducts(state = initalState, action) {
         ...state,
         remove: {
           fetching: false,
+          error: action.payload,
+        },
+      };
+    }
+
+    // update
+    case actionType.START_UPDATE_PRODUCT: {
+      return {
+        ...state,
+        update: {
+          fetching: true,
+        },
+      };
+    }
+    case actionType.SUCCESS_UPDATE_PRODUCT: {
+      return {
+        ...state,
+        update: {
+          fetching: false,
+          data: action.payload,
+        },
+      };
+    }
+    case actionType.FAILED_UPDATE_PRODUCT: {
+      return {
+        ...state,
+        update: {
+          fetching: false,
+          error: action.payload,
+        },
+      };
+    }
+
+    // featured product
+    case actionType.SUCCESS_FEATURED_PRODUCT: {
+      return {
+        ...state,
+        featuredProduct: {
+          data: action.payload,
+        },
+      };
+    }
+    case actionType.FAILED_FEATURED_PRODUCT: {
+      return {
+        ...state,
+        featuredProduct: {
           error: action.payload,
         },
       };

@@ -1,0 +1,11 @@
+// get
+export const GET_BANNER = "GET_BANNER";
+export const FAILED_GET_BANNER = "FAILED_GET_BANNER";
+// add
+export const START_ADD_BANNER = "START_ADD_BANNER";
+export const SUCESS_ADD_BANNER = "SUCESS_ADD_BANNER";
+export const FAILED_ADD_BANNER = "FAILED_ADD_BANNER";
+
+// remove
+export const DELETE_BANNER = "DELETE_BANNER";
+export const FAILED_DELETE_BANNER = "FAILED_DELETE_BANNER";

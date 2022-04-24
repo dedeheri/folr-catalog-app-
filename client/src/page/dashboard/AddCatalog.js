@@ -11,7 +11,7 @@ import Button from "../../components/Button";
 import ButtonCancel from "../../components/ButtonCancel";
 import Layout from "../../components/Dashboard/Layout";
 import Form from "../../components/Form";
-import SelectCatalog from "../../components/SelectCatalog";
+import SelectCategory from "../../components/SelectCategory";
 import Spin from "../../components/Spin";
 import Upload from "../../components/Upload";
 
@@ -108,7 +108,7 @@ function AddCatalog() {
               </div>
               <div className="col-span-2">
                 <div className="flex space-x-2">
-                  <SelectCatalog
+                  <SelectCategory
                     data={data}
                     category={category}
                     setCategory={setCategory}

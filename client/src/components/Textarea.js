@@ -6,8 +6,8 @@ function Textarea({ error, message, placeholder, ...rest }) {
       <textarea
         {...rest}
         placeholder={placeholder}
-        rows={3}
-        className={`border p-2 w-full outline-none rounded-md hover:border-black duration-300 ${
+        rows={10}
+        className={`border p-3 w-full outline-none rounded-md hover:border-black duration-300 ${
           error ? "border-red-500" : ""
         }`}
       />

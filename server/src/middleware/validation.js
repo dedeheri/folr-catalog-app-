@@ -76,6 +76,29 @@ function validation(props) {
       ];
     }
     // add product
+    case "UPDATE_PRODUCT": {
+      return [
+        body("productName")
+          .notEmpty()
+          .withMessage("Nama Produk tidak boleh kosong"),
+        body("price").notEmpty().withMessage("Harga tidak boleh kosong"),
+        body("material").notEmpty().withMessage("Bahan tidak boleh kosong"),
+        body("category").notEmpty().withMessage("Kategori tidak boleh kosong"),
+        body("catalog").notEmpty().withMessage("Katalog tidak boleh kosong"),
+        body("description")
+          .notEmpty()
+          .withMessage("Deskripsi tidak boleh kosong"),
+        body("lengthy").notEmpty().withMessage("Panjang tidak boleh kosong"),
+        body("width").notEmpty().withMessage("Lebar tidak boleh kosong"),
+        body("height").notEmpty().withMessage("Tinggi tidak boleh kosong"),
+        body("weight").notEmpty().withMessage("Berat tidak boleh kosong"),
+        body("tokopedia")
+          .notEmpty()
+          .withMessage("Link Tokopedia tidak boleh kosong"),
+        body("shopee").notEmpty().withMessage("Link Shoppe tidak boleh kosong"),
+      ];
+    }
+
     case "PRODUCT": {
       return [
         body("image").custom((value, { req }) => {
@@ -115,6 +138,12 @@ function validation(props) {
     // category
     case "CATEGORY": {
       return [
+        body("image").custom((value, { req }) => {
+          if (!req.file) {
+            throw new Error("Gambar tidak boleh kosong");
+          }
+          return true;
+        }),
         body("category").notEmpty().withMessage("Kategori tidak boleh kosong"),
       ];
     }
@@ -130,6 +159,49 @@ function validation(props) {
           }
           return true;
         }),
+      ];
+    }
+    // catalog
+    case "UPDATE_CATALOG": {
+      return [
+        body("catalog").notEmpty().withMessage("Katalog tidak boleh kosong"),
+        body("image").custom((value, { req }) => {
+          if (req.body) {
+            return true;
+          }
+          if (!req.file) {
+            throw new Error("Gambar tidak boleh kosong");
+          }
+          return true;
+        }),
+      ];
+    }
+
+    // gallery
+    case "GALLERY": {
+      return [
+        body("image").custom((value, { req }) => {
+          if (!req.file) {
+            throw new Error("Gambar tidak boleh kosong");
+          }
+          return true;
+        }),
+        body("description")
+          .notEmpty()
+          .withMessage("Deskripsi tidak boleh kosong"),
+      ];
+    }
+
+    // banner
+    case "BANNER": {
+      return [
+        body("image").custom((value, { req }) => {
+          if (!req.file) {
+            throw new Error("Gambar tidak boleh kosong");
+          }
+          return true;
+        }),
+        body("link").notEmpty().withMessage("Link tidak boleh kosong"),
       ];
     }
 

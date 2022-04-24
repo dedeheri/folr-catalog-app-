@@ -85,3 +85,51 @@ export function addProducts(formData, navigate) {
     }
   };
 }
+
+// update
+export function updateProducts(formData, id, navigate) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionType.START_UPDATE_PRODUCT });
+      const header = {
+        headers: {
+          "content-type ": `multipart/form-data; boundary=${formData._boundry}`,
+        },
+      };
+
+      const { data } = await url.put(`backend/product/${id}`, formData, {
+        header,
+      });
+      dispatch({ type: actionType.SUCCESS_UPDATE_PRODUCT, payload: data });
+      toast.success(data?.message);
+      navigate("/dashboard/product");
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_UPDATE_PRODUCT,
+        payload: error.response.data,
+      });
+      toast.error(error.response.data.message);
+    }
+  };
+}
+
+// featured
+export function featuredProduct(id, featuredProduct) {
+  return async (dispatch) => {
+    try {
+      const { data } = await url.put(
+        `backend/featured-product/${id}`,
+        { featuredProduct },
+        config
+      );
+      dispatch({ type: actionType.SUCCESS_FEATURED_PRODUCT, payload: data });
+      toast.success(data?.message);
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_FEATURED_PRODUCT,
+        payload: error.response.data,
+      });
+      toast.error(error.response.data.message);
+    }
+  };
+}

@@ -1,0 +1,8 @@
+// get
+export const GET_GALLERY = "GET_GALLERY";
+export const FAILED_GET_GALLERY = "FAILED_GET_GALLERY";
+
+// add
+export const START_ADD_GALLERY = "START_ADD_GALLERY";
+export const SUCESS_ADD_GALLERY = "SUCESS_ADD_GALLERY";
+export const FAILED_ADD_GALLERY = "FAILED_ADD_GALLERY";

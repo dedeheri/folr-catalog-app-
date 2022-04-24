@@ -68,7 +68,7 @@ async function addProduct(req, res) {
 
 async function getProduct(req, res) {
   const id = req.decode.id;
-  const sort = req.query.sort;
+  const sort = req.query.sort || -1;
   const category = req.query.category;
 
   try {
@@ -146,8 +146,6 @@ async function updateProduct(req, res) {
   const height = req.body.height;
   const weight = req.body.weight;
 
-  const img = image.map(({ path }) => path);
-
   // validation
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -165,6 +163,22 @@ async function updateProduct(req, res) {
     if (!product) {
       return res.status(404).json({ message: "Produk tidak tersedia" });
     }
+
+    function generateImage() {
+      if (image.length !== 0) {
+        const img = image.map(({ path }) => path);
+        product.image.map((_) => {
+          const p = path.join(__dirname, "../../../", _);
+          fs.unlinkSync(p);
+        });
+        return img;
+      } else {
+        for (let im of product.image) {
+          return im;
+        }
+      }
+    }
+    const img = generateImage();
 
     await products.findByIdAndUpdate(
       { _id: id },
@@ -198,10 +212,42 @@ async function updateProduct(req, res) {
   }
 }
 
+async function featuredProduct(req, res) {
+  const id = req.params.id;
+  const featuredProduct = Boolean(req.body.featuredProduct);
+
+  try {
+    const product = await products.findById({ _id: id });
+    if (!product) {
+      return res.status(404).json({ message: "Produk tidak tersedia" });
+    } else {
+      await products.findByIdAndUpdate(
+        { _id: product._id },
+        { featuredProduct },
+        { new: true }
+      );
+
+      if (featuredProduct) {
+        return res.status(200).json({
+          message: `Berhasil menerapkan produk unggulan`,
+        });
+      } else {
+        return res.status(200).json({
+          message: `Berhasil membatalakn produk unggulan`,
+        });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Terjadi Kesalahan" });
+  }
+}
+
 module.exports = {
   addProduct,
   getProduct,
   deleteProduct,
   detailProduct,
   updateProduct,
+  featuredProduct,
 };

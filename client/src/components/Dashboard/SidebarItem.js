@@ -8,7 +8,6 @@ import {
   BiLandscape,
   BiMessageDetail,
 } from "react-icons/bi";
-import { AiOutlineSetting } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 
 import * as actionTypes from "../../redux/action-types-style";
@@ -60,23 +59,12 @@ function SidebarItem() {
             <BiCategoryAlt fontSize={24} />
             <h1 className="text-xl">Kategori</h1>
           </NavLink>
-        </div>
-
-        <div className="border-t" />
-        <div className="space-y-1">
           <NavLink
             className={({ isActive }) => (isActive ? active : noActive)}
             to={"/dashboard/banner"}
           >
             <BiLandscape fontSize={24} />
             <h1 className="text-xl">Banner</h1>
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => (isActive ? active : noActive)}
-            to={"/dashboard/setting"}
-          >
-            <AiOutlineSetting fontSize={24} />
-            <h1 className="text-xl">Pengaturan</h1>
           </NavLink>
         </div>
 

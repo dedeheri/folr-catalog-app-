@@ -1,7 +1,6 @@
 import * as actionType from "../../reducer/dashboard/auth/actionTypes";
 
 import url from "../../../api/base";
-import { toast } from "react-toastify";
 
 const config = {
   headers: {

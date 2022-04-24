@@ -1,16 +1,20 @@
 const { validationResult } = require("express-validator");
 const categorys = require("../../model/category");
 const catalogs = require("../../model/catalog");
+
 const latterUpperCase = require("../../utils/uppercase");
-const path = require("path");
-const fs = require("fs");
+const removeImage = require("../../utils/removeImage");
 
 async function addCategory(req, res) {
   const id = req.decode.id;
   const category = req.body.category;
+  const image = req.file;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    if (image !== undefined) {
+      removeImage(image.path);
+    }
     return res.status(422).json({ message: errors.mapped() });
   }
 
@@ -24,6 +28,7 @@ async function addCategory(req, res) {
   try {
     await categorys({
       userId: id,
+      image: image.path,
       category: latterUpperCase(category),
     }).save();
 
@@ -44,8 +49,7 @@ async function addCatalog(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     if (image !== undefined) {
-      const link = path.join(__dirname, "../../../", image.path);
-      fs.unlinkSync(link);
+      removeImage(image.path);
     }
     return res.status(422).json({ message: errors.mapped() });
   }
@@ -139,8 +143,7 @@ async function updateCatalog(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     if (image !== undefined) {
-      const link = path.join(__dirname, "../../../", image.path);
-      fs.unlinkSync(link);
+      removeImage(image.path);
     }
 
     return res.status(422).json({ message: errors.mapped() });
@@ -159,7 +162,7 @@ async function updateCatalog(req, res) {
         { _id: catalog._id },
         {
           catalog: catalogBody,
-          image: image.path,
+          image: image == undefined ? catalog.image : image.path,
         },
         {
           new: true,

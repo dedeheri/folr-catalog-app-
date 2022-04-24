@@ -5,7 +5,6 @@ import App from "./App";
 import { Provider } from "react-redux";
 import "./index.css";
 
-// eslint-disable-next-line
 import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

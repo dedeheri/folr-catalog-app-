@@ -5,10 +5,21 @@ const initialState = {
   menu: false,
   removeProduct: {
     condition: false,
-    data: [],
+    id: "",
+    title: "",
   },
   feedback: false,
   removeCatalog: {
+    condition: false,
+    data: [],
+  },
+  featuredProduct: {
+    condition: false,
+    id: "",
+    title: "",
+    body: null,
+  },
+  banner: {
     condition: false,
     data: [],
   },
@@ -49,8 +60,8 @@ function style(state = initialState, action) {
         ...state,
         removeProduct: {
           condition: true,
-          id: action.id,
           title: action.title,
+          id: action.id,
         },
       };
     }
@@ -94,6 +105,48 @@ function style(state = initialState, action) {
         },
       };
     }
+
+    // featured
+    case actionTypes.FEATURED_PRODUCT_DASHBOARD_ON: {
+      return {
+        ...state,
+        featuredProduct: {
+          condition: true,
+          title: action.title,
+          id: action.id,
+          body: action.body,
+        },
+      };
+    }
+    case actionTypes.FEATURED_PRODUCT_DASHBOARD_OFF: {
+      return {
+        ...state,
+        featuredProduct: {
+          condition: false,
+        },
+      };
+    }
+
+    // banner
+    case actionTypes.REMOVE_BANNER_ON: {
+      return {
+        ...state,
+        banner: {
+          condition: true,
+          id: action.id,
+          title: action.title,
+        },
+      };
+    }
+    case actionTypes.REMOVE_BANNER_OFF: {
+      return {
+        ...state,
+        banner: {
+          condition: false,
+        },
+      };
+    }
+
     default:
       return state;
   }

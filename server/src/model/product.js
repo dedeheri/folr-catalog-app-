@@ -19,6 +19,10 @@ const product = new mongoose.Schema(
       default: null,
       trim: true,
     },
+    featuredProduct: {
+      type: Boolean,
+      default: false,
+    },
     price: {
       type: Number,
       required: true,

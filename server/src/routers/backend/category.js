@@ -11,6 +11,7 @@ const image = require("../../middleware/multer/image");
 router.post(
   "/add-category",
   verify,
+  image.single("image"),
   validation("CATEGORY"),
   category.addCategory
 );
@@ -27,7 +28,7 @@ router.put(
   "/catalog",
   verify,
   image.single("image"),
-  validation("CATALOG"),
+  validation("UPDATE_CATALOG"),
   category.updateCatalog
 );
 

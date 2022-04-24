@@ -26,6 +26,11 @@ const initalState = {
     data: [],
     error: [],
   },
+  updateCatalog: {
+    fetching: false,
+    data: [],
+    error: [],
+  },
 };
 
 function dashboardCategory(state = initalState, action) {
@@ -153,6 +158,34 @@ function dashboardCategory(state = initalState, action) {
         ...state,
         detailCatalog: {
           loading: false,
+          error: action.payload,
+        },
+      };
+    }
+
+    // update catalog
+    case actionType.START_UPDATE_CATALOG: {
+      return {
+        ...state,
+        updateCatalog: {
+          fetching: true,
+        },
+      };
+    }
+    case actionType.SUCCESS_UPDATE_CATALOG: {
+      return {
+        ...state,
+        updateCatalog: {
+          fetching: false,
+          data: action.payload,
+        },
+      };
+    }
+    case actionType.FAILED_UPDATE_CATALOG: {
+      return {
+        ...state,
+        updateCatalog: {
+          fetching: false,
           error: action.payload,
         },
       };

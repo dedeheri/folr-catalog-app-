@@ -88,7 +88,7 @@ function Feedback() {
       <div className="px-4 py-2 space-y-2 pt-8">
         <div className="flex justify-between">
           {expressions.map((emot) => (
-            <h1
+            <div
               key={emot.id}
               onClick={() => clickExpression(emot.id, emot.emot)}
               className={`text-3xl hover:bg-yellow-100 bg-yellow-50 p-1 rounded-md duration-300 cursor-pointer ${
@@ -96,7 +96,7 @@ function Feedback() {
               }`}
             >
               {emot.emot}
-            </h1>
+            </div>
           ))}
         </div>
       </div>

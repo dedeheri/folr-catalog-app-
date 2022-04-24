@@ -7,13 +7,23 @@ import style from "./style";
 import dashboardProducts from "./dashboard/product/product";
 import dashboardCategory from "./dashboard/category/category";
 import dashboardFeedback from "./dashboard/feedback/feedback";
+import dashboardGallery from "./dashboard/gallery/gallery";
+import dashboardBanner from "./dashboard/banner/banner";
 import auth from "../reducer/dashboard/auth/auth";
+
+// main
+import banner from "./main/banner/banner";
+import category from "./main/category/category";
 
 const reducers = combineReducers({
   auth,
   style,
   dashboardProducts,
   dashboardCategory,
+  dashboardGallery,
   dashboardFeedback,
+  dashboardBanner,
+  banner,
+  category,
 });
 export default reducers;

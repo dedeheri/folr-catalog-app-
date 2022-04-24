@@ -17,7 +17,11 @@ import UpdateProducts from "../page/dashboard/UpdateProducts";
 import Category from "../page/dashboard/Category";
 import AddCategory from "../page/dashboard/AddCategory";
 import AddCatalog from "../page/dashboard/AddCatalog";
+import Gallery from "../page/dashboard/Gallery";
 import UpdateCatalog from "../page/dashboard/UpdateCatalog";
+import AddGallery from "../page/dashboard/AddGallery";
+import Banner from "../page/dashboard/Banner";
+import AddBanner from "../page/dashboard/AddBanner";
 
 function Dashboard() {
   const cookie = getCookies();
@@ -26,7 +30,7 @@ function Dashboard() {
 
   useEffect(() => {
     cookie.token && cookie.logged ? setProtec(true) : setProtec(false);
-  }, []);
+  }, [cookie]);
 
   useEffect(() => {
     dispatch(getUser());
@@ -45,6 +49,10 @@ function Dashboard() {
           <Route path="category/add-category" element={<AddCategory />} />
           <Route path="category/add-catalog" element={<AddCatalog />} />
           <Route path="category/catalog" element={<UpdateCatalog />} />
+          <Route path="banner" element={<Banner />} />
+          <Route path="banner/add" element={<AddBanner />} />
+          <Route path="gallery" element={<Gallery />} />
+          <Route path="gallery/add-gallery" element={<AddGallery />} />
         </Routes>
       ) : (
         <Routes>

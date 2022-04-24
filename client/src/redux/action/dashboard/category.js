@@ -107,3 +107,30 @@ export function getDetailCatalog(query) {
     }
   };
 }
+
+export function updateCatalog(query, formData, navigate) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionType.START_UPDATE_CATALOG });
+
+      const header = {
+        headers: {
+          "content-type ": `multipart/form-data; boundary=${formData._boundry}`,
+        },
+      };
+
+      const { data } = await url.put(`backend/catalog${query}`, formData, {
+        header,
+      });
+      dispatch({ type: actionType.SUCCESS_UPDATE_CATALOG, payload: data });
+      toast.success(data?.message);
+      navigate("/dashboard/category");
+    } catch (error) {
+      dispatch({
+        type: actionType.FAILED_UPDATE_CATALOG,
+        payload: error.response.data,
+      });
+      toast.error(error.response.data.message);
+    }
+  };
+}

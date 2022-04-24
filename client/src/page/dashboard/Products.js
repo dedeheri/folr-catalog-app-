@@ -15,31 +15,28 @@ function Products() {
   const {
     get: { data, loading },
     remove: { data: message },
+    featuredProduct: { data: messageFeatured },
   } = useSelector((state) => state.dashboardProducts);
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch, message]);
-
-  // console.log(data);
+  }, [dispatch, message, messageFeatured]);
 
   return (
     <Layout>
-      <div>
-        <div className="flex space-x-3 justify-end">
-          <Filter />
-          {/* add */}
-          <Add link={"add"} name="Tambah Produk" />
-        </div>
-
-        {loading ? (
-          <Table />
-        ) : data?.result?.length == 0 ? (
-          <Empty />
-        ) : (
-          <TableProducts data={data} />
-        )}
+      <div className="flex space-x-3 justify-end">
+        <Filter />
+        {/* add */}
+        <Add link={"add"} name="Tambah Produk" />
       </div>
+
+      {loading ? (
+        <Table />
+      ) : data?.result?.length == 0 ? (
+        <Empty />
+      ) : (
+        <TableProducts data={data} />
+      )}
     </Layout>
   );
 }

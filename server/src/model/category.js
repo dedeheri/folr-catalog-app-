@@ -6,6 +6,11 @@ const category = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "authorizations",
     },
+    image: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     category: {
       type: String,
       required: true,

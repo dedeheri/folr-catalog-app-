@@ -19,8 +19,9 @@ router.put(
   "/product/:id",
   verify,
   image.array("image", 10),
-  validation("PRODUCT"),
+  validation("UPDATE_PRODUCT"),
   product.updateProduct
 );
+router.put("/featured-product/:id", product.featuredProduct);
 
 module.exports = router;
