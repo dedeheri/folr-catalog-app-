@@ -52,7 +52,7 @@ function AddProducts() {
 
   useEffect(() => {
     setCategory(data?.result?.[0]);
-    setCatalog(data?.result?.[1]?.catalog[0]);
+    setCatalog(data?.result?.[0]?.catalog[0]);
   }, [data]);
 
   // image

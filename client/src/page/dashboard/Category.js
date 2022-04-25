@@ -57,7 +57,7 @@ function Category() {
 
       {loading ? (
         <CategoryLoading />
-      ) : data?.result == 0 ? (
+      ) : data?.result === 0 ? (
         <Empty />
       ) : (
         data?.result?.map((category) => (
@@ -130,6 +130,7 @@ function Category() {
                   className="border p-3 space-y-4 rounded-md relative group"
                 >
                   <img
+                    alt={_id}
                     src={process.env.REACT_APP_URL_IMAGE + image}
                     className="w-44 h-44 mx-auto"
                   />

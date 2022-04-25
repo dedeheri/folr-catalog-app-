@@ -47,7 +47,7 @@ function Navbar() {
         >
           <IoMdMenu fontSize={25} />
         </div>
-        <img src={logo} className="w-28 md:w-32" />
+        <img src={logo} className="w-28 md:w-32" alt="logo" />
       </div>
 
       {/* popper */}

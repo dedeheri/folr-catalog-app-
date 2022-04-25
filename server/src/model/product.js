@@ -24,7 +24,7 @@ const product = new mongoose.Schema(
       default: false,
     },
     price: {
-      type: Number,
+      type: String,
       required: true,
       trim: true,
     },
@@ -49,17 +49,17 @@ const product = new mongoose.Schema(
       dimensions: {
         type: Object,
         lengthy: {
-          type: Number,
+          type: String,
           required: true,
           trim: true,
         },
         width: {
-          type: Number,
+          type: String,
           required: true,
           trim: true,
         },
         height: {
-          type: Number,
+          type: String,
           required: true,
           trim: true,
         },
@@ -70,7 +70,7 @@ const product = new mongoose.Schema(
         trim: true,
       },
       weight: {
-        type: Number,
+        type: String,
         required: true,
         trim: true,
       },
@@ -82,7 +82,7 @@ const product = new mongoose.Schema(
         required: true,
         trim: true,
       },
-      tokopeida: { type: String, required: true, trim: true },
+      tokopedia: { type: String, required: true, trim: true },
     },
   },
   { timestamps: true }

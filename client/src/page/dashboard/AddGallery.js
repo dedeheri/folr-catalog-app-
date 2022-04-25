@@ -13,7 +13,7 @@ import { addGallery } from "../../redux/action/dashboard/gallery";
 
 function AddGallery() {
   const {
-    add: { fetching, data, error },
+    add: { fetching, error },
   } = useSelector((state) => state.dashboardGallery);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,8 +44,6 @@ function AddGallery() {
 
     dispatch(addGallery(formData, navigate));
   }
-
-  console.log(error);
 
   return (
     <Layout>

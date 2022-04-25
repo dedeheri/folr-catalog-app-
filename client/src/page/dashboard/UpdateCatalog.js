@@ -31,7 +31,7 @@ function UpdateCatalog() {
 
   useEffect(() => {
     dispatch(getDetailCatalog(search));
-  }, [dispatch]);
+  }, [dispatch, search]);
 
   useEffect(() => {
     const url = process.env.REACT_APP_URL_IMAGE;

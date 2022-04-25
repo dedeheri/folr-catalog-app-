@@ -23,13 +23,6 @@ function TableProducts({ data }) {
     "Link",
   ];
 
-  function currency(text) {
-    return new Intl.NumberFormat("in", {
-      style: "currency",
-      currency: "idr",
-    }).format(text);
-  }
-
   function handleDelete(id, title) {
     dispatch({
       type: actionTypes.REMOVE_PRODUCT_DASHBOARD_ON,
@@ -81,7 +74,8 @@ function TableProducts({ data }) {
             >
               <td className="text-md whitespace-nowrap px-3 p-1">
                 <img
-                  src={"http://localhost:4021/" + list.image[0]}
+                  alt={process.env.REACT_APP_URL_IMAGE + list.image[0]}
+                  src={process.env.REACT_APP_URL_IMAGE + list.image[0]}
                   className="h-14 w-14 rounded-md"
                 />
               </td>
@@ -101,7 +95,7 @@ function TableProducts({ data }) {
                 </div>
               </td>
               <td className="text-md whitespace-nowrap px-3">
-                {currency(list.price)}
+                Rp {list.price}
               </td>
               <td className="text-md whitespace-nowrap px-3 r">
                 {list.discount ? list.discount : "Tidak ada diskon"}
@@ -124,12 +118,20 @@ function TableProducts({ data }) {
               <td className="text-md whitespace-nowrap px-3">
                 <div className="flex space-x-2">
                   <div className="bg-green-100 px-3 rounded-md">
-                    <a href={list?.link?.tokopedia} target="_blank">
+                    <a
+                      href={list?.link?.tokopedia}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Tokopedia
                     </a>
                   </div>
                   <div className="bg-orange-100 px-3 rounded-md">
-                    <a href={list?.link?.shopee} target="_blank">
+                    <a
+                      href={list?.link?.shopee}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Shopee
                     </a>
                   </div>

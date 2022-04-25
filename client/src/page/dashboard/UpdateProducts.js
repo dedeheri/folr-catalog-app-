@@ -22,6 +22,7 @@ import {
   getProductsDetail,
   updateProducts,
 } from "../../redux/action/dashboard/product";
+import NotFound from "../../page/NotFound";
 
 function UpdateProducts() {
   const { id } = useParams();
@@ -40,8 +41,6 @@ function UpdateProducts() {
     dispatch(getProductsDetail(id));
     dispatch(getCategory());
   }, [dispatch, id]);
-
-  console.log(error);
 
   // form
   const [image, setImage] = useState([]);
@@ -121,8 +120,6 @@ function UpdateProducts() {
     dispatch(updateProducts(formData, id, navigate));
   }
 
-  console.log(image);
-
   function handlePreviewOne(e) {
     const image = e.target.files[0];
     setImageOne(image);
@@ -164,8 +161,10 @@ function UpdateProducts() {
 
   return (
     <Layout>
-      {loading || loadingg ? (
+      {loading ? (
         <Update />
+      ) : errors ? (
+        <NotFound />
       ) : (
         <form onSubmit={handleUpdate} className="max-w-5xl mx-auto">
           <h1 className="font-medium text-2xl">

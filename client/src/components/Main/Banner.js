@@ -25,28 +25,33 @@ function Banner() {
 
   return (
     <div>
-      <Swiper
-        spaceBetween={30}
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-        }}
-        modules={[Pagination, Autoplay]}
-        className="mySwiper"
-      >
-        {data?.result?.map((c) => (
-          <SwiperSlide key={c._id}>
-            <img
-              src={process.env.REACT_APP_URL_IMAGE + c.image}
-              className="w-full h-[22rem] rounded-md"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {loading ? (
+        <div>Loading </div>
+      ) : (
+        <Swiper
+          spaceBetween={30}
+          loop={true}
+          pagination={{
+            clickable: true,
+          }}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+          }}
+          modules={[Pagination, Autoplay]}
+          className="mySwiper"
+        >
+          {data?.result?.map((c) => (
+            <SwiperSlide key={c._id}>
+              <img
+                alt={process.env.REACT_APP_URL_IMAGE + c.image}
+                src={process.env.REACT_APP_URL_IMAGE + c.image}
+                className="w-full h-[22rem] rounded-md"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 }

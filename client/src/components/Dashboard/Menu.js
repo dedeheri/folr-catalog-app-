@@ -50,7 +50,7 @@ function Menu({ children }) {
                 <div className="flex h-full flex-col bg-white shadow-xl">
                   <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                     <div className="flex items-start justify-between">
-                      <img src={logo} className="w-36" />
+                      <img src={logo} className="w-36" alt="logo" />
                       <div className="ml-3 flex h-7 items-center pt-4">
                         <button
                           type="button"

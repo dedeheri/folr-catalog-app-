@@ -2,7 +2,6 @@ import React from "react";
 
 // router
 import { Route, Routes } from "react-router-dom";
-import Layout from "../components/Main/Layout";
 import Home from "../page/main/Home";
 import NotFound from "../page/NotFound";
 

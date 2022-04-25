@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { HiOutlineCheck, HiSelector } from "react-icons/hi";
+import { HiSelector } from "react-icons/hi";
 
 function SelectCatalog({ data, catalog, setCatalog }) {
   return (

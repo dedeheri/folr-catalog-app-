@@ -49,7 +49,7 @@ function Login() {
     return () => {
       dispatch({ type: actionTypes.REMOVE_MESSAGE_REGISTER });
     };
-  }, []);
+  });
 
   return (
     <Layout>

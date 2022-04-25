@@ -20,7 +20,7 @@ function Reset() {
 
   useEffect(() => {
     dispatch(getTokenExp(search));
-  }, [dispatch]);
+  }, [dispatch, search]);
 
   // alert
   const [show, setShow] = useState(false);

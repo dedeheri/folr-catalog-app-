@@ -32,7 +32,7 @@ function Products() {
 
       {loading ? (
         <Table />
-      ) : data?.result?.length == 0 ? (
+      ) : data?.result?.length === 0 ? (
         <Empty />
       ) : (
         <TableProducts data={data} />
