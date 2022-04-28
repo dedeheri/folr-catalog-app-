@@ -13,6 +13,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+import BannerLoading from "./Loading/Banner";
+
 function Banner() {
   const {
     get: { data, loading },
@@ -26,7 +28,7 @@ function Banner() {
   return (
     <div>
       {loading ? (
-        <div>Loading </div>
+        <BannerLoading />
       ) : (
         <Swiper
           spaceBetween={30}

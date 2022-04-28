@@ -23,6 +23,13 @@ const initialState = {
     condition: false,
     data: [],
   },
+
+  image: {
+    condition: false,
+    url: "",
+    title: "",
+    data: [],
+  },
 };
 
 function style(state = initialState, action) {
@@ -142,6 +149,27 @@ function style(state = initialState, action) {
       return {
         ...state,
         banner: {
+          condition: false,
+        },
+      };
+    }
+
+    // image
+    case actionTypes.IMAGE_ON: {
+      return {
+        ...state,
+        image: {
+          condition: true,
+          url: action.url,
+          title: action.title,
+          data: action.data,
+        },
+      };
+    }
+    case actionTypes.IMAGE_OFF: {
+      return {
+        ...state,
+        image: {
           condition: false,
         },
       };

@@ -382,7 +382,7 @@ function AddProducts() {
             {/* end parent */}
           </div>
           <div className="flex justify-end my-10 ">
-            <div className="w-96 flex space-x-2 ">
+            <div className="md:w-96 flex space-x-2 w-full">
               <ButtonCancel link={"/dashboard/product"} name="Batal" />
               {fetching ? <Spin /> : <Button name={"Simpan"} />}
             </div>

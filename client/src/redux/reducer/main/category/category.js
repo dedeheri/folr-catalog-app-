@@ -1,9 +1,16 @@
 import * as actionType from "./actionType";
 
 const initalState = {
-  loading: true,
-  data: [],
-  error: [],
+  get: {
+    loading: true,
+    data: [],
+    error: [],
+  },
+  byQuery: {
+    loading: true,
+    data: [],
+    error: [],
+  },
 };
 
 function category(state = initalState, action) {
@@ -12,16 +19,41 @@ function category(state = initalState, action) {
     case actionType.GET_CATEGORY: {
       return {
         ...state,
-        loading: false,
-        data: action.payload,
+        get: { loading: false, data: action.payload },
       };
     }
 
     case actionType.FAILED_GET_CATEGORY: {
       return {
         ...state,
-        loading: false,
-        error: action.payload,
+        get: {
+          loading: false,
+          error: action.payload,
+        },
+      };
+    }
+
+    // by quert
+    case actionType.GET_BY_QUERY_CATEGORY: {
+      return {
+        ...state,
+        byQuery: { loading: false, data: action.payload },
+      };
+    }
+
+    case actionType.FAILED_GET_BY_QUERY_CATEGORY: {
+      return {
+        ...state,
+        byQuery: {
+          loading: false,
+          error: action.payload,
+        },
+      };
+    }
+    case actionType.REMOVE_GET_BY_QUERY_CATEGORY: {
+      return {
+        ...state,
+        byQuery: {},
       };
     }
 

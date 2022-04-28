@@ -24,3 +24,7 @@ export const REMOVE_CATALOG_OFF = "REMOVE_CATALOG_OFF";
 // remove banner
 export const REMOVE_BANNER_ON = "REMOVE_BANNER_ON";
 export const REMOVE_BANNER_OFF = "REMOVE_BANNER_OFF";
+
+// image
+export const IMAGE_ON = "IMAGE_ON";
+export const IMAGE_OFF = "IMAGE_OFF";

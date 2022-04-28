@@ -25,15 +25,20 @@ export function getCategory() {
 }
 
 // get categoru
-export function addCategory(category, navigate) {
+export function addCategory(formData, navigate) {
   return async (dispatch) => {
     try {
       dispatch({ type: actionType.START_ADD_CATEGORY });
-      const { data } = await url.post(
-        "backend/add-category",
-        { category },
-        config
-      );
+
+      const header = {
+        headers: {
+          "content-type ": `multipart/form-data; boundary=${formData._boundry}`,
+        },
+      };
+
+      const { data } = await url.post("backend/add-category", formData, {
+        header,
+      });
       dispatch({ type: actionType.SUCCESS_ADD_CATEGORY, payload: data });
       toast.success(data?.message);
       navigate("/dashboard/category");

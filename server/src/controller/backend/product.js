@@ -33,24 +33,24 @@ async function addProduct(req, res) {
 
   const img = image.map(({ path }) => path);
 
+  function replaceAllDots(text) {
+    return text.replace(/\./g, "");
+  }
+
   try {
     await new products({
       userId,
       productName,
       image: img,
-      price,
+      price: replaceAllDots(price),
       description,
-      productInfo: {
-        category,
-        catalog,
-        dimensions: {
-          lengthy,
-          width,
-          height,
-        },
-        material,
-        weight,
-      },
+      category,
+      catalog,
+      width: replaceAllDots(width),
+      lengthy: replaceAllDots(lengthy),
+      height: replaceAllDots(height),
+      material,
+      weight: replaceAllDots(weight),
       link: {
         shopee,
         tokopedia,

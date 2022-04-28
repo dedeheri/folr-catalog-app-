@@ -45,7 +45,6 @@ function Category() {
       })}`,
     });
   }
-
   return (
     <Layout>
       <div className="flex space-x-3 md:justify-end overflow-x-scroll md:overflow-hidden scrollbar-hide w-full">
@@ -57,7 +56,7 @@ function Category() {
 
       {loading ? (
         <CategoryLoading />
-      ) : data?.result === 0 ? (
+      ) : data?.result?.length === 0 ? (
         <Empty />
       ) : (
         data?.result?.map((category) => (

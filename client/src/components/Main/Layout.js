@@ -1,13 +1,14 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Image from "./Image";
 
 function Layout({ children }) {
   return (
     <div className="relative  h-screen font-roboto">
       <Navbar />
-
-      <div className="max-w-[90rem] mx-auto px-4">
-        <div className="space-y-10">{children}</div>
+      <Image />
+      <div className="max-w-[80rem] mx-auto px-4 mt-24 md:mt-32">
+        {children}
       </div>
     </div>
   );

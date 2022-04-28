@@ -108,10 +108,10 @@ function TableProducts({ data }) {
               <td className="text-md whitespace-nowrap px-3">
                 <div className="flex space-x-2">
                   <div className="bg-gray-100 px-3 rounded-md">
-                    {list?.productInfo?.category}
+                    {list?.category}
                   </div>
                   <div className="bg-gray-100 px-3 rounded-md">
-                    {list?.productInfo?.catalog}
+                    {list?.catalog}
                   </div>
                 </div>
               </td>

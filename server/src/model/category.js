@@ -11,6 +11,7 @@ const category = mongoose.Schema(
       required: true,
       trim: true,
     },
+
     category: {
       type: String,
       required: true,

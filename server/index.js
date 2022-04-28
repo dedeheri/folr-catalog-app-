@@ -21,6 +21,7 @@ const bannerRouterBackend = require("./src/routers/backend/banner.js");
 // fronend
 const bannerRouterFrontend = require("./src/routers/frontend/banner.js");
 const categoryRouterFrontend = require("./src/routers/frontend/category.js");
+const productRouterFrontend = require("./src/routers/frontend/product.js");
 
 const errorMulter = require("./src/middleware/multer/error.js");
 
@@ -55,6 +56,7 @@ app.use("/api/backend", bannerRouterBackend);
 // fronend
 app.use("/api/frontend", bannerRouterFrontend);
 app.use("/api/frontend", categoryRouterFrontend);
+app.use("/api/frontend", productRouterFrontend);
 
 // error
 app.use(errorMulter);
