@@ -99,17 +99,22 @@ async function getProductByHistory(req, res) {
 async function getProductByCategory(req, res) {
   const catalog = req.query.catalog;
   const category = req.query.category;
+  const ctg = req.query.ctg;
   const sort = req.query.sort;
 
   try {
     if (typeof catalog !== "undefined" && typeof category !== "undefined") {
-      const product = await products.find({ category, catalog }).sort({ sort });
+      const product = await products
+        .find({ category, catalog })
+        .sort({ createdAt: sort });
       return res.status(200).json({ result: product, title: catalog });
-    } else if (typeof catalog !== "undefined") {
-      const product = await products.find({ catalog }).sort({ sort });
-      return res.status(200).json({ result: product, title: catalog });
+    } else if (typeof ctg !== "undefined") {
+      const product = await products
+        .find({ catalog: ctg })
+        .sort({ createdAt: sort });
+      return res.status(200).json({ result: product, title: ctg });
     } else {
-      const product = await products.find({}).sort({ sort });
+      const product = await products.find({}).sort({ createdAt: sort });
       return res.status(200).json({ result: product });
     }
   } catch (error) {

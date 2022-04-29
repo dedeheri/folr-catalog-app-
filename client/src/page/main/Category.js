@@ -1,36 +1,32 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+// redux
 import { useDispatch, useSelector } from "react-redux";
-import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { getCategory } from "../../redux/action/main/category";
 
-import Layout from "../../components/Main/Layout";
-
-import CategoryLoading from "../../components/Main/Loading/Category";
-import Empty from "../../components/Empty";
-import { getCategoryByQuery } from "../../redux/action/main/category";
+// components
 import CardCategory from "../../components/Main/CardCategory";
+import Layout from "../../components/Main/Layout";
+import CategoryLoading from "../../components/Main/Loading/Category";
 
 function Category() {
   const {
-    byQuery: { data, loading },
+    get: { data, loading },
   } = useSelector((state) => state.category);
   const dispatch = useDispatch();
-
-  const { search } = useLocation();
   const navigate = useNavigate();
 
-  // calling
+  // calling api
   useEffect(() => {
-    dispatch(getCategoryByQuery(search));
-  }, [dispatch, search]);
+    dispatch(getCategory());
+  }, [dispatch]);
 
-  console.log(search);
+  function hanldeQuery(c) {
+    const slug = c.replaceAll(" ", "-");
 
-  function hanldeQuery(title) {
     navigate({
-      pathname: `/products`,
-      search: `${createSearchParams({
-        catalog: title,
-      })}`,
+      pathname: `/category/${slug}`,
     });
   }
 
@@ -38,18 +34,18 @@ function Category() {
     <Layout>
       {loading ? (
         <CategoryLoading />
-      ) : data?.result?.length === 0 ? (
-        <Empty />
       ) : (
         <div className="space-y-5">
-          <h1 className="font-bold text-2xl">{data?.message}</h1>
+          <div className="flex justify-between items-center">
+            <h1 className="font-bold text-xl">Semua Kategori</h1>
+          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3  gap-6">
-            {data?.result?.map(({ _id, catalog, image }) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {data?.result?.map(({ _id, image, category }) => (
               <CardCategory
                 key={_id}
-                title={catalog}
                 image={image}
+                title={category}
                 hanldeQuery={hanldeQuery}
               />
             ))}

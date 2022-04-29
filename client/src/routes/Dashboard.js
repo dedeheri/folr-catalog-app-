@@ -48,6 +48,10 @@ function Dashboard() {
           <Route path="/category" element={<Category />} />
           <Route path="category/add-category" element={<AddCategory />} />
           <Route path="category/add-catalog" element={<AddCatalog />} />
+          <Route
+            path="category/add-banner"
+            element={<AddBanner sorted={true} />}
+          />
           <Route path="category/catalog" element={<UpdateCatalog />} />
           <Route path="banner" element={<Banner />} />
           <Route path="banner/add" element={<AddBanner />} />

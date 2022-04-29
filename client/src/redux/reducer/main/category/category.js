@@ -6,7 +6,7 @@ const initalState = {
     data: [],
     error: [],
   },
-  byQuery: {
+  catalog: {
     loading: true,
     data: [],
     error: [],
@@ -34,26 +34,26 @@ function category(state = initalState, action) {
     }
 
     // by quert
-    case actionType.GET_BY_QUERY_CATEGORY: {
+    case actionType.GET_CATALOG: {
       return {
         ...state,
-        byQuery: { loading: false, data: action.payload },
+        catalog: { loading: false, data: action.payload },
       };
     }
 
-    case actionType.FAILED_GET_BY_QUERY_CATEGORY: {
+    case actionType.FAILED_GET_CATALOG: {
       return {
         ...state,
-        byQuery: {
+        catalog: {
           loading: false,
           error: action.payload,
         },
       };
     }
-    case actionType.REMOVE_GET_BY_QUERY_CATEGORY: {
+    case actionType.REMOVE_GET_CATALOG: {
       return {
         ...state,
-        byQuery: {},
+        catalog: {},
       };
     }
 

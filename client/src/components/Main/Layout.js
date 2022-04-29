@@ -7,7 +7,7 @@ function Layout({ children }) {
     <div className="relative  h-screen font-roboto">
       <Navbar />
       <Image />
-      <div className="max-w-[80rem] mx-auto px-4 mt-24 md:mt-32">
+      <div className="max-w-[80rem] mx-auto px-4 pt-24 md:pt-32">
         {children}
       </div>
     </div>

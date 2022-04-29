@@ -7,6 +7,10 @@ const banners = mongoose.Schema(
       required: true,
       trim: true,
     },
+    sorted: {
+      type: String,
+      default: null,
+    },
     link: {
       type: String,
       required: true,

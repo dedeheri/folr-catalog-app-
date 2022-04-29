@@ -2,7 +2,7 @@ import React from "react";
 
 function Banner() {
   return (
-    <div className="animate-pulse h-[22rem] w-full bg-gray-100 rounded-md"></div>
+    <div className="animate-pulse w-full md:h-[22rem] h-[12rem] rounded-md bg-gray-100"></div>
   );
 }
 

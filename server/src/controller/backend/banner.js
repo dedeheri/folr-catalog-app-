@@ -6,6 +6,7 @@ const removeImage = require("../../utils/removeImage");
 async function addBanner(req, res) {
   const image = req.file;
   const link = req.body.link;
+  const sorted = req.body.sorted;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -19,6 +20,7 @@ async function addBanner(req, res) {
     await new banners({
       image: image.path,
       link,
+      sorted,
     }).save();
 
     return res.status(200).json({ massage: "Berhasil menambahkan banner" });

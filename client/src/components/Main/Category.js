@@ -4,8 +4,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { getCategory } from "../../redux/action/main/category";
-import CardCategory from "./CardCategory";
 
+// redux
+import CardCategory from "./CardCategory";
 import CategoryLoading from "./Loading/Category";
 
 function Category() {
@@ -29,19 +30,28 @@ function Category() {
     });
   }
 
+  function handleCategory() {
+    navigate({
+      pathname: "/category",
+    });
+  }
+
   return loading ? (
     <CategoryLoading />
   ) : (
     <div className="space-y-5">
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-2xl">Kategori</h1>
-        <button className="font-medium text-lg text-blue-500">
+        <button
+          onClick={handleCategory}
+          className="font-medium text-lg text-blue-500"
+        >
           Lihat Semua
         </button>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {data?.result?.map(({ _id, image, category }) => (
+        {data?.result?.slice(0, 6).map(({ _id, image, category }) => (
           <CardCategory
             key={_id}
             image={image}

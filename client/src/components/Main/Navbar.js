@@ -7,17 +7,34 @@ import Search from "./Search";
 
 function Navbar() {
   const [scroll, setScroll] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  function hideScroll() {
+    if (typeof window !== "undefined") {
+      if (window.scrollY > lastScrollY) {
+        setScroll(true);
+      } else {
+        setScroll(false);
+      }
+    }
+
+    setLastScrollY(window.scrollY);
+  }
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      setScroll(window.scrollY > 50);
-    });
-  }, []);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", hideScroll);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", hideScroll);
+    };
+  }, [lastScrollY]);
 
   return (
     <div
-      className={`h-16 bg-white z-50 border-b flex items-center px-5 lg:px-28 justify-between fixed w-full top-0 ${
-        scroll ? "shadow-md ease-in-out duration-300" : ""
+      className={`h-16 bg-white z-50 border-b flex items-center px-5 lg:px-28 justify-between fixed w-full top-0 duration-300 ease-in-out  ${
+        scroll ? "-translate-y-full" : "translate-y-auto"
       } `}
     >
       <Link to={"/"}>

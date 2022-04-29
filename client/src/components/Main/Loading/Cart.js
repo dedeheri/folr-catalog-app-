@@ -14,9 +14,9 @@ function Cart() {
   );
 
   return (
-    <div className="space-y-3">
-      <div className="w-[17rem] h-8 rounded-md bg-gray-100" />
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 animate-pulse">
+    <div className="space-y-3  animate-pulse">
+      <div className="w-[14.8rem] h-8 rounded-md bg-gray-100" />
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {loading}
         {loading}
         {loading}

@@ -52,6 +52,7 @@ function Category() {
         {/* add */}
         <Add link={"add-category"} name="Tambah Kategori" />
         <Add link={"add-catalog"} name="Tambah Katalog" />
+        <Add link={"add-banner"} name="Tambah Banner" />
       </div>
 
       {loading ? (

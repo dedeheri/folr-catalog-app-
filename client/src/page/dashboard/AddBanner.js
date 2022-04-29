@@ -1,23 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import ButtonCancel from "../../components/ButtonCancel";
 import Layout from "../../components/Dashboard/Layout";
 import Form from "../../components/Form";
+import SelectCategory from "../../components/SelectCategory";
 import Spin from "../../components/Spin";
 import Upload from "../../components/Upload";
 import { addBanner } from "../../redux/action/dashboard/banner";
+import { getCategory } from "../../redux/action/dashboard/category";
 
-function AddBanner() {
+function AddBanner({ sorted }) {
   const {
     add: { error, fetching },
   } = useSelector((state) => state.dashboardBanner);
+
+  const {
+    getCategory: { data },
+  } = useSelector((state) => state.dashboardCategory);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (sorted) {
+      setCategory(data?.result?.[0]);
+    }
+  }, [data, sorted]);
+
   const [image, setImage] = useState("");
   const [link, setLink] = useState("");
+  const [category, setCategory] = useState("");
 
   // preview
   const [preview, setPreview] = useState("");
@@ -43,6 +61,7 @@ function AddBanner() {
     const formData = new FormData();
     formData.append("image", image);
     formData.append("link", link);
+    formData.append("sorted", category.category);
 
     dispatch(addBanner(formData, navigate));
   }
@@ -81,11 +100,30 @@ function AddBanner() {
         </div>
         {/* end image */}
 
-        {/* category */}
+        {/* informasi */}
         <div className="border rounded-md p-5 mt-5">
           <h1 className="text-lg font-medium ">Informasi Banner</h1>
 
-          {/* catalog */}
+          {/* section 1 */}
+          {sorted && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-8">
+              <div className="space-y-1">
+                <h1 className="text-md font-medium">Kategori</h1>
+                <p className="text-base text-gray-500 leading-5">
+                  Banner akan di sortir berdasarkan Kategori
+                </p>
+              </div>
+              <div className="col-span-2">
+                <SelectCategory
+                  data={data}
+                  category={category}
+                  setCategory={setCategory}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* section 2 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-8">
             <div className="space-y-3">
               <h1 className="text-md font-medium">Link</h1>

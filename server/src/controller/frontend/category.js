@@ -1,33 +1,28 @@
 const categorys = require("../../model/category");
 const catalogs = require("../../model/catalog");
+const banners = require("../../model/banner");
 
-async function getCategory(req, res) {
-  const category = req.query.category;
+async function getCategoryByCatalog(req, res) {
+  const category = req.params.category;
+  const slug = category.split("-").join(" ");
+
   try {
-    if (category) {
-      const data = await categorys
-        .findOne({ category })
-        .sort({ createdAt: -1 })
-        .populate("catalog");
+    const data = await categorys
+      .findOne({ category: slug })
+      .sort({ createdAt: -1 })
+      .populate("catalog");
 
-      // console.log(data._id);
-
-      if (data.length === 0) {
-        return res.status(200).json({ message: "Kategori tidak tersedia" });
-      } else {
-        const catalog = await catalogs.find({ categoryId: data._id });
-
-        return res.status(200).json({
-          result: catalog,
-          message: `Kategori ${data.category}`,
-        });
-      }
+    if (!data) {
+      return res.status(404).json({ message: "Kategori tidak tersedia" });
     } else {
-      const data = await categorys
-        .find({})
-        .sort({ createdAt: -1 })
-        .populate("catalog");
-      return res.status(200).json({ result: data });
+      const banner = await banners.find({ sorted: data.category });
+      const catalog = await catalogs.find({ categoryId: data._id });
+
+      return res.status(200).json({
+        result: catalog,
+        banner: banner,
+        message: `Hasil untuk ${data.category}`,
+      });
     }
   } catch (error) {
     console.log(error);
@@ -35,18 +30,17 @@ async function getCategory(req, res) {
   }
 }
 
-async function getCategoryByCatalog(req, res) {
-  const catalog = req.query.catalog;
-
-  const category = await categorys
-    .find({ catalog })
-    .sort({ createdAt: -1 })
-    .populate("catalog");
-
+async function getCategory(req, res) {
   try {
-    console.log(category);
+    const category = await categorys
+      .find()
+      .sort({ createdAt: -1 })
+      .populate("catalog");
+
+    return res.status(200).json({ result: category });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Terjadi Kesalahan" });
   }
 }
 
